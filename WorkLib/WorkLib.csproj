@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\AppExceptions.cs" />
     <Compile Include="Model\Project.cs">
       <DependentUpon>WorkModel.tt</DependentUpon>
     </Compile>
@@ -81,6 +82,7 @@
       <DependentUpon>WorkModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\WorkRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
