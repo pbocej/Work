@@ -33,3 +33,7 @@ REFERENCES [dbo].[Users] ([UserId])
 GO
 ALTER TABLE [dbo].[WorkHours] CHECK CONSTRAINT [FK_WorkHours_Users]
 GO
+-- insert data
+USE [MyWork]
+GO
+
