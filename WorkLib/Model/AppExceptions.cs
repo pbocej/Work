@@ -51,8 +51,8 @@ namespace WorkLib.Model
             var msg = ex.Message;
             if (ex.InnerException != null)
                 msg += rowSeparator + GetFullMessage(rowSeparator, ex.InnerException);
+            return msg;
         }
-
         #endregion
     }
 

@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\WorkLib.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -42,6 +43,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -53,62 +55,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\DbContext.cs" />
     <Compile Include="Model\AppExceptions.cs" />
-    <Compile Include="Model\Project.cs">
-      <DependentUpon>WorkModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\User.cs">
-      <DependentUpon>WorkModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\UserGroup.cs">
-      <DependentUpon>WorkModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\WorkHour.cs">
-      <DependentUpon>WorkModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\WorkModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WorkModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\WorkModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WorkModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Model\WorkModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>WorkModel.edmx</DependentUpon>
-    </Compile>
+    <Compile Include="Model\Project.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Model\UserGroup.cs" />
+    <Compile Include="Model\WorkHour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\WorkRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="Model\WorkModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>WorkModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Model\WorkModel.edmx.diagram">
-      <DependentUpon>WorkModel.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Model\WorkModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WorkModel.edmx</DependentUpon>
-      <LastGenOutput>WorkModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Model\WorkModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>WorkModel.edmx</DependentUpon>
-      <LastGenOutput>WorkModel.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

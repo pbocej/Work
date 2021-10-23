@@ -22,5 +22,10 @@ namespace Work
             RefreshData();
 
         }
+
+        void RefreshData()
+        {
+
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WorkLib.Data;
 using WorkLib.Model;
 
 namespace WorkLib.Repository
@@ -22,18 +23,14 @@ namespace WorkLib.Repository
         {
             try
             {
-
+                using (var context = new DbContext())
+                {
+                    return null;
+                }
             }
             catch (Exception ex)
             {
                 throw new AppException($"Error getting user by name: {userName}", ex);
-            }
-            using (var context = new MyWorkEntities())
-            {
-                return
-                    (from user in context.Users
-                    where user.UserName == userName
-                    select user).FirstOrDefault<User>();
             }
         }
 
