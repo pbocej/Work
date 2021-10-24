@@ -14,9 +14,9 @@ namespace WorkLib.Data
     /// <summary>Database access class</summary>
     public class DbContext : IDisposable
     {
-        private IDbConnection dbConnection;
-        private static DbProviderFactory factory;
-        private static string connectionString;
+        private IDbConnection _dbConnection;
+        private static DbProviderFactory _factory;
+        private static string _connectionString;
 
         #region Initialization 
 
@@ -35,13 +35,13 @@ namespace WorkLib.Data
         /// Error loading configuration.</exception>
         private void LoadDataConfiguration(string name)
         {
-            if (factory != null)
+            if (_factory != null)
                 return;
             try
             {
                 var providerName = ConfigurationManager.ConnectionStrings[name].ProviderName;
-                factory = DbProviderFactories.GetFactory(providerName);
-                connectionString = ConfigurationManager.ConnectionStrings[name].ConnectionString;
+                _factory = DbProviderFactories.GetFactory(providerName);
+                _connectionString = ConfigurationManager.ConnectionStrings[name].ConnectionString;
             }
             catch (Exception ex)
             {
@@ -60,9 +60,9 @@ namespace WorkLib.Data
             try
             {
                 Close();
-                dbConnection = factory.CreateConnection();
-                dbConnection.ConnectionString = connectionString;
-                dbConnection.Open();
+                _dbConnection = _factory.CreateConnection();
+                _dbConnection.ConnectionString = _connectionString;
+                _dbConnection.Open();
             }
             catch (Exception ex)
             {
@@ -77,10 +77,38 @@ namespace WorkLib.Data
         /// </summary>
         public void Close()
         {
-            if (dbConnection != null)
-                if (dbConnection.State == ConnectionState.Open)
-                    dbConnection.Close();
-            dbConnection = null;
+            if (_dbConnection != null)
+                if (_dbConnection.State == ConnectionState.Open)
+                    _dbConnection.Close();
+            _dbConnection = null;
+        }
+
+        /// <summary>Gets the connection.</summary>
+        /// <value>The connection.</value>
+        public IDbConnection Connection => _dbConnection;
+
+        #endregion
+
+        #region Command & Parameters
+
+        /// <summary>Creates the database command.</summary>
+        /// <param name="sql">The SQL command string</param>
+        /// <param name="commandType">Type of the command.</param>
+        /// <returns>IDbCommand</returns>
+        /// <exception cref="WorkLib.Model.AppException">Error creating database command.</exception>
+        public IDbCommand CreateCommand(string sql = null, CommandType commandType = CommandType.Text)
+        {
+            try
+            {
+                IDbCommand cmd = _dbConnection.CreateCommand();
+                cmd.CommandType = commandType;
+                cmd.CommandText = sql;
+                return cmd;
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("Error creating database command.", ex);
+            }
         }
 
         #endregion
