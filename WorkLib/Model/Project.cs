@@ -11,23 +11,28 @@ namespace WorkLib.Model
 {
     using System;
     using System.Collections.Generic;
-    
+
+    /// <summary>Project type</summary>
     public partial class Project
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        /// <summary>Initializes a new instance of the <see cref="Project" /> class.</summary>
         public Project()
         {
-            this.WorkHours = new HashSet<WorkHour>();
             this.Users = new HashSet<User>();
         }
-    
+
+        /// <summary>Gets or sets the project identifier.</summary>
+        /// <value>The project identifier.</value>
         public int ProjectId { get; set; }
+        /// <summary>Gets or sets the name of the project.</summary>
+        /// <value>The name of the project.</value>
         public string ProjectName { get; set; }
+        /// <summary>Gets or sets the project description.</summary>
+        /// <value>The project description.</value>
         public string ProjectDescription { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WorkHour> WorkHours { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+
+        /// <summary>Gets or sets the users for project.</summary>
+        /// <value>The users.</value>
         public virtual ICollection<User> Users { get; set; }
     }
 }

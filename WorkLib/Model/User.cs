@@ -11,29 +11,79 @@ namespace WorkLib.Model
 {
     using System;
     using System.Collections.Generic;
-    
+    using WorkLib.Repository;
+
+    /// <summary>User type.</summary>
     public partial class User
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        /// <summary>Initializes a new instance of the <see cref="User" /> class.</summary>
         public User()
         {
             this.WorkHours = new HashSet<WorkHour>();
             this.Projects = new HashSet<Project>();
         }
-    
+
+        /// <summary>Gets or sets the user identifier.</summary>
+        /// <value>The user identifier.</value>
         public int UserId { get; set; }
+        /// <summary>Gets or sets the name of the user.</summary>
+        /// <value>The name of the user.</value>
         public string UserName { get; set; }
+        /// <summary>Gets or sets the password.</summary>
+        /// <value>The password.</value>
         public string Password { get; set; }
+        /// <summary>Gets or sets the first name.</summary>
+        /// <value>The first name.</value>
         public string FirstName { get; set; }
+        /// <summary>Gets or sets the last name.</summary>
+        /// <value>The last name.</value>
         public string LastName { get; set; }
+        /// <summary>
+        /// Gets the full name.
+        /// </summary>
+        /// <value>
+        /// The full name.
+        /// </value>
+        public string FullName
+        {
+            get
+            {
+                var fullName = $"{(FirstName ?? "")} {(LastName ?? "")}";
+                if (fullName.Length > 1) // moore then one space separator
+                    return fullName;
+                return UserName;
+            }
+        }
+        /// <summary>Gets or sets the email.</summary>
+        /// <value>The email.</value>
         public string Email { get; set; }
+        /// <summary>Gets or sets the phone.</summary>
+        /// <value>The phone.</value>
         public string Phone { get; set; }
+        /// <summary>Gets or sets the user group identifier.</summary>
+        /// <value>The user group identifier.</value>
         public int UserGroupId { get; set; }
-    
-        public virtual UserGroup UserGroup { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WorkHour> WorkHours { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Project> Projects { get; set; }
+
+        private UserGroup _userGroup;
+        /// <summary>Gets the user group.</summary>
+        /// <value>The user group.</value>
+        public UserGroup UserGroup 
+        { 
+            get
+            {
+                if (_userGroup == null)
+                    // TODO: GetGroup from repository
+                    _userGroup = null; // WorkRepository.GetGroup(UserGroupId);
+                return _userGroup;
+            }
+        }
+
+        /// <summary>Gets the work hours.</summary>
+        /// <value>The work hours collection.</value>
+        public ICollection<WorkHour> WorkHours { get; }
+
+        /// <summary>Gets the projects for user.</summary>
+        /// <value>The projects collection.</value>
+        public virtual ICollection<Project> Projects { get; }
     }
 }

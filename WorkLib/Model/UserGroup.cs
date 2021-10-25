@@ -11,20 +11,29 @@ namespace WorkLib.Model
 {
     using System;
     using System.Collections.Generic;
-    
+
+    /// <summary>User group object</summary>
     public partial class UserGroup
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        /// <summary>Initializes a new instance of the <see cref="UserGroup" /> class.</summary>
         public UserGroup()
         {
             this.Users = new HashSet<User>();
         }
-    
+
+        /// <summary>Gets or sets the user group identifier.</summary>
+        /// <value>The user group identifier.</value>
         public int UserGroupId { get; set; }
+        /// <summary>Gets or sets the name of the group.</summary>
+        /// <value>The name of the group.</value>
         public string GroupName { get; set; }
+        /// <summary>Gets or sets a value indicating whether [group type].</summary>
+        /// <value>
+        ///   <c>true</c> if [group type]; otherwise, <c>false</c>.</value>
         public bool GroupType { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+
+
+        /// <summary>Gets users for this group.</summary>
+        public ICollection<User> Users { get; }
     }
 }
