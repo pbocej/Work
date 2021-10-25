@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace WorkLib.Model
 {
@@ -31,7 +32,15 @@ namespace WorkLib.Model
         /// <exception cref="System.NotImplementedException"></exception>
         public virtual void Load(IDataReader reader)
         {
-            throw new NotImplementedException();
+            var properties = (
+                from p in this.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty)
+                select p).ToArray();
+            foreach (var pi in properties)
+            {
+                var pos = reader.GetOrdinal(pi.Name);
+                if (pos > -1)
+                    pi.SetValue(this, reader.GetValue(pos));
+            }
         }
 
         /// <summary>
@@ -41,7 +50,18 @@ namespace WorkLib.Model
         /// <exception cref="System.NotImplementedException"></exception>
         public virtual void Load(DataRow row)
         {
-            throw new NotImplementedException();
+            var properties = (
+                from p in this.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty)
+                select p).ToArray();
+            foreach (var pi in properties)
+            {
+                try
+                {
+                    pi.SetValue(this, row[pi.Name]);
+                }
+                catch
+                { }
+            }
         }
     }
 }
