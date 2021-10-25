@@ -57,6 +57,8 @@
   <ItemGroup>
     <Compile Include="Data\DbContext.cs" />
     <Compile Include="Model\AppExceptions.cs" />
+    <Compile Include="Model\Entity.cs" />
+    <Compile Include="Model\IEntity.cs" />
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\User.cs" />
     <Compile Include="Model\UserGroup.cs" />

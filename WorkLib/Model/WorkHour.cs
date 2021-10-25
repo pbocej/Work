@@ -14,7 +14,7 @@ namespace WorkLib.Model
     using System.ComponentModel.DataAnnotations;
 
     /// <summary>Work hour object.</summary>
-    public partial class WorkHour
+    public partial class WorkHour : Entity<WorkHour>
     {
         /// <summary>Gets or sets the work hour identifier.</summary>
         /// <value>The work hour identifier.</value>

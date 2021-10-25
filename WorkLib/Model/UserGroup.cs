@@ -11,9 +11,10 @@ namespace WorkLib.Model
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>User group object</summary>
-    public partial class UserGroup
+    public partial class UserGroup : Entity<UserGroup>
     {
         /// <summary>Initializes a new instance of the <see cref="UserGroup" /> class.</summary>
         public UserGroup()
@@ -23,13 +24,18 @@ namespace WorkLib.Model
 
         /// <summary>Gets or sets the user group identifier.</summary>
         /// <value>The user group identifier.</value>
+        [Key]
         public int UserGroupId { get; set; }
         /// <summary>Gets or sets the name of the group.</summary>
         /// <value>The name of the group.</value>
+        [Required(ErrorMessage = "Group name is required.")]
         public string GroupName { get; set; }
-        /// <summary>Gets or sets a value indicating whether [group type].</summary>
+        /// <summary>Gets or sets a value indicating whether [group type].
+        /// 0 - administrators; 1 - users</summary>
         /// <value>
         ///   <c>true</c> if [group type]; otherwise, <c>false</c>.</value>
+        [Required(ErrorMessage = "Group type is required.")]
+        [RegularExpression("[0,1]", ErrorMessage = "Only values 0 (administrators) or 1 (users) are enabled.")]
         public bool GroupType { get; set; }
 
 

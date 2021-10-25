@@ -11,10 +11,11 @@ namespace WorkLib.Model
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using WorkLib.Repository;
 
     /// <summary>User type.</summary>
-    public partial class User
+    public partial class User : Entity<User>
     {
         /// <summary>Initializes a new instance of the <see cref="User" /> class.</summary>
         public User()
@@ -25,9 +26,11 @@ namespace WorkLib.Model
 
         /// <summary>Gets or sets the user identifier.</summary>
         /// <value>The user identifier.</value>
+        [Key]
         public int UserId { get; set; }
         /// <summary>Gets or sets the name of the user.</summary>
         /// <value>The name of the user.</value>
+        [Required(ErrorMessage = "User namne is required.")]
         public string UserName { get; set; }
         /// <summary>Gets or sets the password.</summary>
         /// <value>The password.</value>

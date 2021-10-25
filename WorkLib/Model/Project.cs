@@ -11,9 +11,10 @@ namespace WorkLib.Model
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     /// <summary>Project type</summary>
-    public partial class Project
+    public partial class Project : Entity<Project>
     {
         /// <summary>Initializes a new instance of the <see cref="Project" /> class.</summary>
         public Project()
@@ -23,9 +24,11 @@ namespace WorkLib.Model
 
         /// <summary>Gets or sets the project identifier.</summary>
         /// <value>The project identifier.</value>
+        [Key]
         public int ProjectId { get; set; }
         /// <summary>Gets or sets the name of the project.</summary>
         /// <value>The name of the project.</value>
+        [Required(ErrorMessage = "Project name is required.")]
         public string ProjectName { get; set; }
         /// <summary>Gets or sets the project description.</summary>
         /// <value>The project description.</value>
@@ -33,6 +36,6 @@ namespace WorkLib.Model
 
         /// <summary>Gets or sets the users for project.</summary>
         /// <value>The users.</value>
-        public virtual ICollection<User> Users { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }
