@@ -112,13 +112,13 @@ namespace WorkLib.Data
         }
 
         /// <summary>
-        /// Gets the data parameter for command.
+        /// Creates the data parameter for command.
         /// </summary>
         /// <param name="name">Parameter name.</param>
-        /// <param name="dbType">Database type (default: string).</param>
         /// <param name="value">Parameter value value (default: null).</param>
+        /// <param name="dbType">Database type (default: string).</param>
         /// <returns></returns>
-        public IDataParameter GetParameter(string name, DbType dbType = DbType.String, object value = null)
+        public IDataParameter CreateParameter(string name, object value = null, DbType dbType = DbType.String)
         {
             IDataParameter par = _factory.CreateParameter();
             par.ParameterName = name;
@@ -132,6 +132,144 @@ namespace WorkLib.Data
 
         #endregion
 
+        #region DataSet & DataTable
+
+        /// <summary>
+        /// Gets the data set.
+        /// </summary>
+        /// <param name="cmd">The db command.</param>
+        /// <returns>DataSet</returns>
+        /// <exception cref="WorkLib.Model.AppException">Error creating DataSet.</exception>
+        public DataSet GetDataSet(IDbCommand cmd)
+        {
+            try
+            {
+                var ds = new DataSet();
+                var adapter = _factory.CreateDataAdapter();
+                adapter.SelectCommand = (DbCommand)cmd;
+                adapter.Fill(ds);
+                return ds;
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("Error creating DataSet.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Gets the data table.
+        /// </summary>
+        /// <param name="cmd">The db command.</param>
+        /// <returns>Datatable</returns>
+        /// <exception cref="WorkLib.Model.AppException">Error creating DataSet.</exception>
+        public DataTable GetTable(IDbCommand cmd)
+        {
+            try
+            {
+                var tbl = new DataTable();
+                var adapter = _factory.CreateDataAdapter();
+                adapter.SelectCommand = (DbCommand)cmd;
+                adapter.Fill(tbl);
+                return tbl;
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("Error creating DataSet.", ex);
+            }
+        }
+
+        #endregion
+
+        #region Get values
+
+        /// <summary>
+        /// Gets the value from reader.
+        /// </summary>
+        /// <param name="reader">The data reader.</param>
+        /// <param name="field">The field.</param>
+        /// <returns>Field`s value</returns>
+        /// <exception cref="WorkLib.Model.AppException">Error getting '{field}' value from reader.</exception>
+        public static object GetValue(IDataReader reader, string field)
+        {
+            try
+            {
+                var pos = reader.GetOrdinal(field);
+                return reader.GetValue(pos);
+            }
+            catch (Exception ex)
+            {
+                throw new AppException($"Error getting '{field}' value from reader.", ex);
+            }
+        }
+        /// <summary>
+        /// Gets the value from reader.
+        /// </summary>
+        /// <param name="row">The data row.</param>
+        /// <param name="field">The field.</param>
+        /// <returns>Field`s value</returns>
+        /// <exception cref="WorkLib.Model.AppException">Error getting '{field}' value from data row.</exception>
+        public static object GetValue(DataRow row, string field)
+        {
+            try
+            {
+                return row[field];
+            }
+            catch (Exception ex)
+            {
+                throw new AppException($"Error getting '{field}' value from data row.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Gets the value from reader.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="reader">The data reader.</param>
+        /// <param name="field">The field.</param>
+        /// <returns></returns>
+        /// <exception cref="WorkLib.Model.AppException">Error getting '{field}' value from reader.</exception>
+        public static T GetValue<T>(IDataReader reader, string field)
+        {
+            try
+            {
+                var val = GetValue(reader, field);
+                return (T)Convert.ChangeType(val, typeof(T));
+            }
+            catch (AppException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new AppException($"Error getting '{field}' value from reader.", ex);
+            }
+        }
+        /// <summary>
+        /// Gets the value from data row.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="row">The data row.</param>
+        /// <param name="field">The field.</param>
+        /// <returns></returns>
+        /// <exception cref="WorkLib.Model.AppException">Error getting '{field}' value from data row.</exception>
+        public static T GetValue<T>(DataRow row, string field)
+        {
+            try
+            {
+                var val = GetValue(row, field);
+                return (T)Convert.ChangeType(val, typeof(T));
+            }
+            catch (AppException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new AppException($"Error getting '{field}' value from data row.", ex);
+            }
+        }
+        #endregion
+        
         #region IDisposable
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>

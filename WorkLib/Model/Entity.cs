@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using WorkLib.Data;
 
 namespace WorkLib.Model
 {
@@ -33,13 +34,22 @@ namespace WorkLib.Model
         public virtual void Load(IDataReader reader)
         {
             var properties = (
-                from p in this.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty)
+                from p in this.GetType().GetProperties(
+                    BindingFlags.Public | 
+                    BindingFlags.Instance | 
+                    BindingFlags.SetProperty)
+                where p.CanWrite
                 select p).ToArray();
             foreach (var pi in properties)
             {
-                var pos = reader.GetOrdinal(pi.Name);
-                if (pos > -1)
-                    pi.SetValue(this, reader.GetValue(pos));
+                try
+                {
+                    pi.SetValue(this, DbContext.GetValue(reader, pi.Name));
+                }
+                catch (Exception ex)
+                {
+                    throw new AppException($"Column '{pi.Name}' not found.", ex);
+                }
             }
         }
 
@@ -57,7 +67,7 @@ namespace WorkLib.Model
             {
                 try
                 {
-                    pi.SetValue(this, row[pi.Name]);
+                    pi.SetValue(this, DbContext.GetValue(row, pi.Name));
                 }
                 catch
                 { }

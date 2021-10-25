@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<OrderedTest name="alltestsorderred" storage="c:\projects\work\worklibtests1\alltestsorderred.orderedtest" id="9289bbe4-5424-4c85-a171-0e3b86733f07" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestLinks>
+    <TestLink id="17d13651-758b-39d6-57c3-af3205ba8675" name="DbContextConstructorTest" storage="bin\debug\worklibtests1.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="70cb2d30-6d20-5234-95d8-741564b06226" name="CreateCommandTest" storage="bin\debug\worklibtests1.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="190a72a8-e870-d5ec-0974-5bd24edceb1d" name="CreateParameterTest" storage="bin\debug\worklibtests1.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="79819b81-be0e-2fe3-5270-7246c80b0689" name="GetDataSetTest" storage="bin\debug\worklibtests1.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="1b0d28ce-a5db-4655-76d9-554824245c53" name="GetTableTest" storage="bin\debug\worklibtests1.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+    <TestLink id="46b460b8-11a3-62e8-b8a4-eb640fad99c7" name="GetUserTest" storage="bin\debug\worklibtests1.dll" type="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestElement, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.ObjectModel,   PublicKeyToken=b03f5f7f11d50a3a" />
+  </TestLinks>
+</OrderedTest>

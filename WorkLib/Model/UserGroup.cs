@@ -17,7 +17,7 @@ namespace WorkLib.Model
     public partial class UserGroup : Entity<UserGroup>
     {
         /// <summary>Initializes a new instance of the <see cref="UserGroup" /> class.</summary>
-        public UserGroup()
+        public UserGroup(object data) : base(data)
         {
             this.Users = new HashSet<User>();
         }

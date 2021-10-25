@@ -14,11 +14,12 @@ namespace WorkLib.Model
     using System.ComponentModel.DataAnnotations;
     using WorkLib.Repository;
 
+
     /// <summary>User type.</summary>
     public partial class User : Entity<User>
     {
         /// <summary>Initializes a new instance of the <see cref="User" /> class.</summary>
-        public User()
+        public User(object data) : base(data)
         {
             this.WorkHours = new HashSet<WorkHour>();
             this.Projects = new HashSet<Project>();

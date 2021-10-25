@@ -16,6 +16,12 @@ namespace WorkLib.Model
     /// <summary>Project type</summary>
     public partial class Project : Entity<Project>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Project"/> class.
+        /// </summary>
+        /// <param name="data">The data.</param>
+        public Project(object data = null) : base(data)
+        { }
         /// <summary>Initializes a new instance of the <see cref="Project" /> class.</summary>
         public Project()
         {

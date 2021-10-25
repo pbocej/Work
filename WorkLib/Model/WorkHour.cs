@@ -16,6 +16,8 @@ namespace WorkLib.Model
     /// <summary>Work hour object.</summary>
     public partial class WorkHour : Entity<WorkHour>
     {
+        public WorkHour(object data) : base(data)
+        { }
         /// <summary>Gets or sets the work hour identifier.</summary>
         /// <value>The work hour identifier.</value>
         [Key]

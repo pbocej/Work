@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,20 +19,34 @@ namespace WorkLib.Repository
 
         /// <summary>Gets the user by username.</summary>
         /// <param name="userName">Name of the user.</param>
+        /// <param name="context">Data context</param>
         /// <returns>User</returns>
-        public static User GetUser(string userName)
+        public static User GetUser(string userName, DbContext context = null)
         {
+            if (context == null)
+                using (var c = new DbContext())
+                {
+                    return GetUser(userName, c);
+                }
             try
             {
-                using (var context = new DbContext())
+                using (var cmd = context.CreateCommand(
+                    "select * from Users where Username = @Username", 
+                    CommandType.Text))
                 {
-                    return null;
+                    cmd.Parameters.Add(context.CreateParameter("Username", userName));
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                            return new User(reader);
+                    }
                 }
             }
             catch (Exception ex)
             {
                 throw new AppException($"Error getting user by name: {userName}", ex);
             }
+            return null;
         }
 
         #endregion
