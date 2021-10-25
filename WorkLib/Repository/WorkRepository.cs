@@ -17,6 +17,41 @@ namespace WorkLib.Repository
     {
         #region Users
 
+        /// <summary>
+        /// Gets the user by Id.
+        /// </summary>
+        /// <param name="id">The user identifier.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>User</returns>
+        /// <exception cref="WorkLib.Model.AppException">Error getting user by id: {id}</exception>
+        public static User GetUser(int id, DbContext context)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                {
+                    return GetUser(id, context);
+                }
+            try
+            {
+                using (var cmd = context.CreateCommand(
+                    "select * from Users where UserId = @id",
+                    CommandType.Text))
+                {
+                    cmd.Parameters.Add(context.CreateParameter("id", id));
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                            return new User(reader);
+                    }
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new AppException($"Error getting user by id: {id}", ex);
+            }
+        }
+
         /// <summary>Gets the user by username.</summary>
         /// <param name="userName">Name of the user.</param>
         /// <param name="context">Data context</param>

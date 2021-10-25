@@ -12,12 +12,15 @@ namespace WorkLib.Repository.Tests
     [TestClass()]
     public class WorkRepositoryTests
     {
-        DbContext context;
+        static DbContext context;
+
+        #region Initialize & terminate
+
         /// <summary>
         /// Initializes this instance.
         /// </summary>
         [ClassInitialize]
-        public void Init()
+        public static void Init(TestContext testContext)
         {
             context = new DbContext();
         }
@@ -25,9 +28,24 @@ namespace WorkLib.Repository.Tests
         /// Closes this instance.
         /// </summary>
         [ClassCleanup]
-        public void Close()
+        public static void Close()
         {
             context.Dispose();
+        }
+
+        #endregion
+
+        #region User
+
+        [TestMethod()]
+        public void GetUserTest1()
+        {
+            // check null value
+            var user = WorkRepository.GetUser(0, context);
+            Assert.IsNull(user);
+            // check not null value
+            user = WorkRepository.GetUser(1, context);
+            Assert.IsNotNull(user);
         }
 
         [TestMethod()]
@@ -40,5 +58,7 @@ namespace WorkLib.Repository.Tests
             user = WorkRepository.GetUser("Peter", context);
             Assert.IsNotNull(user);
         }
+        
+        #endregion
     }
 }
