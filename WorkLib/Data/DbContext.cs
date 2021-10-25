@@ -111,6 +111,25 @@ namespace WorkLib.Data
             }
         }
 
+        /// <summary>
+        /// Gets the data parameter for command.
+        /// </summary>
+        /// <param name="name">Parameter name.</param>
+        /// <param name="dbType">Database type (default: string).</param>
+        /// <param name="value">Parameter value value (default: null).</param>
+        /// <returns></returns>
+        public IDataParameter GetParameter(string name, DbType dbType = DbType.String, object value = null)
+        {
+            IDataParameter par = _factory.CreateParameter();
+            par.ParameterName = name;
+            par.DbType = dbType;
+            if (value == null)
+                par.Value = DBNull.Value;
+            else
+                par.Value = value;
+            return par;
+        }
+
         #endregion
 
         #region IDisposable
