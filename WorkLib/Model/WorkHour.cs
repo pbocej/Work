@@ -16,6 +16,10 @@ namespace WorkLib.Model
     /// <summary>Work hour object.</summary>
     public partial class WorkHour : Entity<WorkHour>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WorkHour"/> class.
+        /// </summary>
+        /// <param name="data">The data.</param>
         public WorkHour(object data) : base(data)
         { }
         /// <summary>Gets or sets the work hour identifier.</summary>

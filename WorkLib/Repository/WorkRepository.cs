@@ -87,6 +87,69 @@ namespace WorkLib.Repository
         #endregion
 
         #region Projects
+
+        /// <summary>
+        /// Gets the project.
+        /// </summary>
+        /// <param name="projectId">The project identifier.</param>
+        /// <param name="context">The data context.</param>
+        /// <returns>Project</returns>
+        public static Project GetProject(int projectId, DbContext context = null)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                    return GetProject(projectId, c);
+            try
+            {
+                using (var cmd = context.CreateCommand("select * from Projects where ProjectId=@id"))
+                {
+                    cmd.Parameters.Add(
+                        context.CreateParameter("id", projectId, DbType.Int32));
+                    using (var reader = cmd.ExecuteReader())
+                        if (reader.Read())
+                            return new Project(reader);
+                }
+                return null;
+            }
+            catch (AppException)
+            {
+                throw;
+            }
+        }
+        /// <summary>
+        /// Gets the project users.
+        /// </summary>
+        /// <param name="projectId">The project identifier.</param>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        /// <exception cref="DbContext"></exception>
+        public static ICollection<User> GetProjectUsers(int projectId, DbContext context = null)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                {
+                    return GetProjectUsers(projectId, c);
+                }
+            try
+            {
+                var list = new List<User>();
+                using (var cmd = context.CreateCommand("select UserId, UserName, FirstName, LastName from v_UserProjects where ProjectId=@id"))
+                {
+                    cmd.Parameters.Add(
+                        context.CreateParameter("id", projectId, DbType.Int32));
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                            list.Add(new User(reader));
+                    }
+                }
+                return list;
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("Error loading project users.", ex);
+            }
+        }
         #endregion
 
         #region Work

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WorkLib.Data;
+using WorkLib.Model;
 
 namespace WorkLib.Repository.Tests
 {
@@ -57,6 +58,24 @@ namespace WorkLib.Repository.Tests
             // check not null value
             user = WorkRepository.GetUser("Peter", context);
             Assert.IsNotNull(user);
+        }
+
+        #endregion
+
+        #region Project
+
+        [TestMethod()]
+        public void GetProjectTest()
+        {
+            try
+            {
+                var proj = WorkRepository.GetProject(1, context);
+                Assert.IsNotNull(proj);
+            }
+            catch (AppException ex)
+            {
+                Assert.Fail(ex.FullMessage);
+            }
         }
         
         #endregion
