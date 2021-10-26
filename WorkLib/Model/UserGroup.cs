@@ -13,22 +13,39 @@ namespace WorkLib.Model
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    /// <summary>
+    /// User group type
+    /// 0: Administrators
+    /// 1: Users
+    /// </summary>
+    public enum GroupType : byte
+    {
+        /// <summary>
+        /// The administrators
+        /// </summary>
+        Administrators = 0,
+        /// <summary>
+        /// The users
+        /// </summary>
+        Users = 1
+    }
+
     /// <summary>User group object</summary>
     public partial class UserGroup : Entity<UserGroup>
     {
         /// <summary>Initializes a new instance of the <see cref="UserGroup" /> class.</summary>
         public UserGroup(object data) : base(data)
-        {
-            this.Users = new HashSet<User>();
-        }
+        { }
 
         /// <summary>Gets or sets the user group identifier.</summary>
         /// <value>The user group identifier.</value>
         [Key]
+        [Display(Name = "Id")]
         public int UserGroupId { get; set; }
         /// <summary>Gets or sets the name of the group.</summary>
         /// <value>The name of the group.</value>
         [Required(ErrorMessage = "Group name is required.")]
+        [Display(Name = "Name")]
         public string GroupName { get; set; }
         /// <summary>Gets or sets a value indicating whether [group type].
         /// 0 - administrators; 1 - users</summary>
@@ -36,10 +53,8 @@ namespace WorkLib.Model
         ///   <c>true</c> if [group type]; otherwise, <c>false</c>.</value>
         [Required(ErrorMessage = "Group type is required.")]
         [RegularExpression("[0,1]", ErrorMessage = "Only values 0 (administrators) or 1 (users) are enabled.")]
-        public bool GroupType { get; set; }
-
-
-        /// <summary>Gets users for this group.</summary>
-        public ICollection<User> Users { get; }
+        [Display(Name = "Type")]
+        public GroupType GroupType { get; set; }
     }
+
 }

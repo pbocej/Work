@@ -20,27 +20,28 @@ namespace WorkLib.Model
     {
         /// <summary>Initializes a new instance of the <see cref="User" /> class.</summary>
         public User(object data) : base(data)
-        {
-            this.WorkHours = new HashSet<WorkHour>();
-            this.Projects = new HashSet<Project>();
-        }
+        { }
 
         /// <summary>Gets or sets the user identifier.</summary>
         /// <value>The user identifier.</value>
         [Key]
+        [Display(Name = "Id")]
         public int UserId { get; set; }
         /// <summary>Gets or sets the name of the user.</summary>
         /// <value>The name of the user.</value>
         [Required(ErrorMessage = "User namne is required.")]
+        [Display(Name = "User name")]
         public string UserName { get; set; }
         /// <summary>Gets or sets the password.</summary>
         /// <value>The password.</value>
         public string Password { get; set; }
         /// <summary>Gets or sets the first name.</summary>
         /// <value>The first name.</value>
+        [Display(Name = "First name")]
         public string FirstName { get; set; }
         /// <summary>Gets or sets the last name.</summary>
         /// <value>The last name.</value>
+        [Display(Name = "Last name")]
         public string LastName { get; set; }
         /// <summary>
         /// Gets the full name.
@@ -48,6 +49,8 @@ namespace WorkLib.Model
         /// <value>
         /// The full name.
         /// </value>
+        [Display(Name = "Full name")]
+        [Editable(false)]
         public string FullName
         {
             get
@@ -67,27 +70,5 @@ namespace WorkLib.Model
         /// <summary>Gets or sets the user group identifier.</summary>
         /// <value>The user group identifier.</value>
         public int UserGroupId { get; set; }
-
-        private UserGroup _userGroup;
-        /// <summary>Gets the user group.</summary>
-        /// <value>The user group.</value>
-        public UserGroup UserGroup 
-        { 
-            get
-            {
-                if (_userGroup == null)
-                    // TODO: GetGroup from repository
-                    _userGroup = null; // WorkRepository.GetGroup(UserGroupId);
-                return _userGroup;
-            }
-        }
-
-        /// <summary>Gets the work hours.</summary>
-        /// <value>The work hours collection.</value>
-        public ICollection<WorkHour> WorkHours { get; }
-
-        /// <summary>Gets the projects for user.</summary>
-        /// <value>The projects collection.</value>
-        public virtual ICollection<Project> Projects { get; }
     }
 }

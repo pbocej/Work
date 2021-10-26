@@ -27,5 +27,30 @@ namespace Work
         {
 
         }
+
+        private void dgWork_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dgWork_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Enter:    // edit
+                    break;
+                case Keys.Insert:   // add
+                    break;
+                case Keys.Delete:   // delete
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -25,20 +25,26 @@ namespace WorkLib.Model
         /// <summary>Gets or sets the work hour identifier.</summary>
         /// <value>The work hour identifier.</value>
         [Key]
+        [Display(Name = "Id")]
         public int WorkHourID { get; set; }
         /// <summary>Gets or sets the work day date.</summary>
         /// <value>The date.</value>
         [Required(ErrorMessage = "Date is required.")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "dd.MM.yyyy")]
         public DateTime Date { get; set; }
         /// <summary>Gets or sets work begin time.</summary>
         /// <value>Work begin time.</value>
         [Required(ErrorMessage = "Behin time is required.")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "H:mm")]
         public DateTime From { get; set; }
         /// <summary>Gets or sets work end time.</summary>
         /// <value>Work end time.</value>
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "H:mm")]
         public DateTime? To { get; set; }
         /// <summary>Gets the work hours.</summary>
         /// <value>The work hours.</value>
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "H:mm")]
+        [Editable(false)]
         public DateTime? Hours 
         { 
             get
@@ -65,12 +71,5 @@ namespace WorkLib.Model
         /// <summary>Gets or sets the user identifier.</summary>
         /// <value>The user identifier.</value>
         public int UserId { get; set; }
-
-        /// <summary>Gets or sets the project.</summary>
-        /// <value>The project.</value>
-        public Project Project { get; set; }
-        /// <summary>Gets or sets the user.</summary>
-        /// <value>The user.</value>
-        public User User { get; set; }
     }
 }
