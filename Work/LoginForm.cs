@@ -39,5 +39,10 @@ namespace Work
             DialogResult = DialogResult.Cancel;
             Close();
         }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            tbUserName.Text = Properties.Settings.Default.LastUserName;
+        }
     }
 }

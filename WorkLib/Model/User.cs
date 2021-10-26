@@ -70,5 +70,9 @@ namespace WorkLib.Model
         /// <summary>Gets or sets the user group identifier.</summary>
         /// <value>The user group identifier.</value>
         public int UserGroupId { get; set; }
+        public GroupType GroupType => UserGroupId == 0 
+            ? GroupType.Administrators 
+            : GroupType.Users;
+
     }
 }
