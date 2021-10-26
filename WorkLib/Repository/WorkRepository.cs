@@ -84,6 +84,60 @@ namespace WorkLib.Repository
             return null;
         }
 
+
+        /// <summary>
+        /// Logins the specified user.
+        /// </summary>
+        /// <param name="userName">Name of the user.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="context">The data context.</param>
+        /// <returns></returns>
+        /// <exception cref="WorkLib.Model.AppException">
+        /// Invalid password.
+        /// or
+        /// User not found.
+        /// or
+        /// Login failed.
+        /// </exception>
+        public static User Login(string userName, string password, DbContext context = null)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                    return Login(userName, password, c);
+            try
+            {
+                using (var cmd = context.CreateCommand("select * from Users where UserName=@username"))
+                {
+                    cmd.Parameters.Add(
+                        context.CreateParameter("username", userName));
+                    using (var r = cmd.ExecuteReader())
+                    {
+                        if (r.Read())
+                        {
+                            var user = new User(r);
+                            if (user.Password == HashPassword(password))
+                                return user;
+                            else throw new AppException("Invalid password.");
+                        }
+                        else throw new AppException("User not found.");
+                    }
+                }
+            }
+            catch (AppException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("Login failed.", ex);
+            }
+        }
+
+        private static string HashPassword(string password)
+        {
+            return password;
+        }
+
         #endregion
 
         #region Projects

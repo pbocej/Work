@@ -43,11 +43,6 @@ namespace Work
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabWork = new System.Windows.Forms.TabPage();
-            this.tabUsers = new System.Windows.Forms.TabPage();
-            this.tabProjects = new System.Windows.Forms.TabPage();
-            this.bsWork = new System.Windows.Forms.BindingSource(this.components);
-            this.bsUsers = new System.Windows.Forms.BindingSource(this.components);
-            this.bsProjects = new System.Windows.Forms.BindingSource(this.components);
             this.dgWork = new System.Windows.Forms.DataGridView();
             this.workHourIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -58,13 +53,18 @@ namespace Work
             this.projectIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.subjectDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.bsWork = new System.Windows.Forms.BindingSource(this.components);
+            this.tabUsers = new System.Windows.Forms.TabPage();
+            this.tabProjects = new System.Windows.Forms.TabPage();
+            this.bsUsers = new System.Windows.Forms.BindingSource(this.components);
+            this.bsProjects = new System.Windows.Forms.BindingSource(this.components);
             this.toolStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabWork.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgWork)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsWork)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsUsers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsProjects)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgWork)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -97,7 +97,6 @@ namespace Work
             this.btAdd.Size = new System.Drawing.Size(49, 22);
             this.btAdd.Text = "Add";
             this.btAdd.ToolTipText = "Add (Ins)";
-            this.btAdd.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // btEdit
             // 
@@ -147,30 +146,6 @@ namespace Work
             this.tabWork.TabIndex = 0;
             this.tabWork.Text = "Work";
             this.tabWork.UseVisualStyleBackColor = true;
-            // 
-            // tabUsers
-            // 
-            this.tabUsers.Location = new System.Drawing.Point(4, 22);
-            this.tabUsers.Name = "tabUsers";
-            this.tabUsers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUsers.Size = new System.Drawing.Size(792, 377);
-            this.tabUsers.TabIndex = 1;
-            this.tabUsers.Text = "Users";
-            this.tabUsers.UseVisualStyleBackColor = true;
-            // 
-            // tabProjects
-            // 
-            this.tabProjects.Location = new System.Drawing.Point(4, 22);
-            this.tabProjects.Name = "tabProjects";
-            this.tabProjects.Padding = new System.Windows.Forms.Padding(3);
-            this.tabProjects.Size = new System.Drawing.Size(792, 377);
-            this.tabProjects.TabIndex = 2;
-            this.tabProjects.Text = "Projects";
-            this.tabProjects.UseVisualStyleBackColor = true;
-            // 
-            // bsWork
-            // 
-            this.bsWork.DataSource = typeof(WorkLib.Model.WorkHour);
             // 
             // dgWork
             // 
@@ -281,6 +256,30 @@ namespace Work
             this.descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
             this.descriptionDataGridViewTextBoxColumn.ReadOnly = true;
             // 
+            // bsWork
+            // 
+            this.bsWork.DataSource = typeof(WorkLib.Model.WorkHour);
+            // 
+            // tabUsers
+            // 
+            this.tabUsers.Location = new System.Drawing.Point(4, 22);
+            this.tabUsers.Name = "tabUsers";
+            this.tabUsers.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUsers.Size = new System.Drawing.Size(792, 377);
+            this.tabUsers.TabIndex = 1;
+            this.tabUsers.Text = "Users";
+            this.tabUsers.UseVisualStyleBackColor = true;
+            // 
+            // tabProjects
+            // 
+            this.tabProjects.Location = new System.Drawing.Point(4, 22);
+            this.tabProjects.Name = "tabProjects";
+            this.tabProjects.Padding = new System.Windows.Forms.Padding(3);
+            this.tabProjects.Size = new System.Drawing.Size(792, 377);
+            this.tabProjects.TabIndex = 2;
+            this.tabProjects.Text = "Projects";
+            this.tabProjects.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -293,15 +292,16 @@ namespace Work
             this.KeyPreview = true;
             this.Name = "MainForm";
             this.Text = "My Work";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabWork.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgWork)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsWork)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsUsers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsProjects)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgWork)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

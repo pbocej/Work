@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Work
@@ -48,9 +41,10 @@ namespace Work
             }
         }
 
-        private void toolStripButton2_Click(object sender, EventArgs e)
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            Properties.Settings.Default.LastUserName = Global.CurrenntUser.UserName;
+            Properties.Settings.Default.Save();
         }
     }
 }
