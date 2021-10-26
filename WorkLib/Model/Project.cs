@@ -37,12 +37,5 @@ namespace WorkLib.Model
         /// <value>The project description.</value>
         [Display(Name = "Description")]
         public string ProjectDescription { get; set; }
-        /// <summary>
-        /// Gets or sets the users.
-        /// </summary>
-        /// <value>
-        /// The users.
-        /// </value>
-        public ICollection<User> Users { get; set; }
     }
 }

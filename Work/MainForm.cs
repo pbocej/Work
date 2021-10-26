@@ -34,13 +34,37 @@ namespace Work
                 cbUser.SelectedItem = Global.CurrenntUser;
                 tabMainControl.TabPages.Remove(tabUsers);
                 tabMainControl.TabPages.Remove(tabProjects);
-                dgWork.Columns[1].Visible = false;
             }
         }
 
         void RefreshData()
         {
-
+            try
+            {
+                Cursor = Cursors.WaitCursor;
+                switch (tabMainControl.SelectedIndex)
+                {
+                    case 0:     // work hours
+                        bsWork.DataSource = WorkRepository.GetAllWork((cbUser.SelectedItem as User).UserId);
+                        break;
+                    case 1:     // users
+                        bsUsers.DataSource = WorkRepository.GetAllUsers();
+                        break;
+                    case 2:     // projects
+                        bsProjects.DataSource = WorkRepository.GetAllProjects();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (AppException ex)
+            {
+                MessageBox.Show(this, ex.FullMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         private void dgWork_DoubleClick(object sender, EventArgs e)
@@ -67,6 +91,22 @@ namespace Work
         {
             Properties.Settings.Default.LastUserName = Global.CurrenntUser.UserName;
             Properties.Settings.Default.Save();
+        }
+
+        private void btRefresh_Click(object sender, EventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void tabMainControl_Selected(object sender, TabControlEventArgs e)
+        {
+            RefreshData();
+        }
+
+        private void cbUser_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (tabMainControl.SelectedIndex == 0)
+                RefreshData();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace WorkLib.Repository
         /// Gets all users.
         /// </summary>
         /// <param name="context">The data context.</param>
-        /// <returns>IEnumerable&lt;User&gt;</returns>
+        /// <returns>User[]</returns>
         /// <exception cref="WorkLib.Model.AppException">Error getting users</exception>
         public static User[] GetAllUsers(DbContext context = null)
         {
@@ -42,7 +42,7 @@ namespace WorkLib.Repository
                         while (reader.Read())
                             users.Add(new User(reader));
                         users.OrderBy(u => u.FullName);
-                        return users.ToArray();
+                        return users.ToArray<User>();
                     }
                 }
             }
@@ -177,6 +177,38 @@ namespace WorkLib.Repository
         #region Projects
 
         /// <summary>
+        /// Gets all projects.
+        /// </summary>
+        /// <param name="context">The data context.</param>
+        /// <returns>Project[]</returns>
+        /// <exception cref="WorkLib.Model.AppException">Error loadint projects.</exception>
+        public static Project[] GetAllProjects(DbContext context = null)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                    return GetAllProjects(c);
+            try
+            {
+                using (var cmd = context.CreateCommand(
+                    "select * from Projects",
+                    CommandType.Text))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var projects = new List<Project>();
+                        while (reader.Read())
+                            projects.Add(new Project(reader));
+                        projects.OrderBy(p => p.ProjectId);
+                        return projects.ToArray();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("Error loadint projects.", ex);
+            }
+        }
+        /// <summary>
         /// Gets the project.
         /// </summary>
         /// <param name="projectId">The project identifier.</param>
@@ -241,6 +273,42 @@ namespace WorkLib.Repository
         #endregion
 
         #region Work
+
+        /// <summary>
+        /// Gets all work.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="context">The data context.</param>
+        /// <returns>WorkHour[]></returns>
+        /// <exception cref="WorkLib.Model.AppException">Error loading work.</exception>
+        public static WorkHour[] GetAllWork(int userId, DbContext context = null)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                    return GetAllWork(userId, c);
+            try
+            {
+                using (var cmd = context.CreateCommand(
+                    "select * from WorkHours where UserId=@userId",
+                    CommandType.Text))
+                {
+                    cmd.Parameters.Add(
+                        context.CreateParameter("UserId", userId, DbType.Int32));
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var works = new List<WorkHour>();
+                        while (reader.Read())
+                            works.Add(new WorkHour(reader));
+                        works.OrderBy(w => w.Date).ThenBy(u => u.From);
+                        return works.ToArray();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("Error Error loading work.", ex);
+            }
+        }
 
         #endregion
     }
