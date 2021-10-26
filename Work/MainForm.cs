@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using WorkLib.Model;
 using WorkLib.Repository;
+using System.Collections.ObjectModel;
 
 namespace Work
 {
@@ -45,13 +46,13 @@ namespace Work
                 switch (tabMainControl.SelectedIndex)
                 {
                     case 0:     // work hours
-                        bsWork.DataSource = WorkRepository.GetAllWork((cbUser.SelectedItem as User).UserId);
+                        bsWork.DataSource = new ObservableCollection<WorkHour>(WorkRepository.GetAllWork((cbUser.SelectedItem as User).UserId));
                         break;
                     case 1:     // users
-                        bsUsers.DataSource = WorkRepository.GetAllUsers();
+                        bsUsers.DataSource = new ObservableCollection<User>(WorkRepository.GetAllUsers());
                         break;
                     case 2:     // projects
-                        bsProjects.DataSource = WorkRepository.GetAllProjects();
+                        bsProjects.DataSource = new ObservableCollection<Project>(WorkRepository.GetAllProjects());
                         break;
                     default:
                         break;

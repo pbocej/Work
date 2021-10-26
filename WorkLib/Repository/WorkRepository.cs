@@ -41,8 +41,7 @@ namespace WorkLib.Repository
                         var users = new List<User>();
                         while (reader.Read())
                             users.Add(new User(reader));
-                        users.OrderBy(u => u.FullName);
-                        return users.ToArray<User>();
+                        return users.OrderBy(u => u.FullName).ToArray<User>();
                     }
                 }
             }
@@ -198,8 +197,7 @@ namespace WorkLib.Repository
                         var projects = new List<Project>();
                         while (reader.Read())
                             projects.Add(new Project(reader));
-                        projects.OrderBy(p => p.ProjectId);
-                        return projects.ToArray();
+                        return projects.OrderBy(p => p.ProjectName).ToArray();
                     }
                 }
             }
@@ -299,8 +297,7 @@ namespace WorkLib.Repository
                         var works = new List<WorkHour>();
                         while (reader.Read())
                             works.Add(new WorkHour(reader));
-                        works.OrderBy(w => w.Date).ThenBy(u => u.From);
-                        return works.ToArray();
+                        return works.OrderBy(w => w.Date).ThenBy(u => u.From).ToArray();
                     }
                 }
             }
