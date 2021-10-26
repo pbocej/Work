@@ -41,11 +41,21 @@ namespace Work
             this.btEdit = new System.Windows.Forms.ToolStripButton();
             this.btDelete = new System.Windows.Forms.ToolStripButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabMainControl = new System.Windows.Forms.TabControl();
             this.tabWork = new System.Windows.Forms.TabPage();
             this.dgWork = new System.Windows.Forms.DataGridView();
+            this.tabUsers = new System.Windows.Forms.TabPage();
+            this.tabProjects = new System.Windows.Forms.TabPage();
+            this.bsUsers = new System.Windows.Forms.BindingSource(this.components);
+            this.bsProjects = new System.Windows.Forms.BindingSource(this.components);
+            this.cbUser = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lbCurrentUser = new System.Windows.Forms.ToolStripStatusLabel();
+            this.bsWork = new System.Windows.Forms.BindingSource(this.components);
             this.workHourIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.userIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fromDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.toDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -53,18 +63,14 @@ namespace Work
             this.projectIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.subjectDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bsWork = new System.Windows.Forms.BindingSource(this.components);
-            this.tabUsers = new System.Windows.Forms.TabPage();
-            this.tabProjects = new System.Windows.Forms.TabPage();
-            this.bsUsers = new System.Windows.Forms.BindingSource(this.components);
-            this.bsProjects = new System.Windows.Forms.BindingSource(this.components);
             this.toolStrip1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
+            this.tabMainControl.SuspendLayout();
             this.tabWork.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgWork)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsWork)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsUsers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsProjects)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsWork)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -73,7 +79,10 @@ namespace Work
             this.btRefresh,
             this.btAdd,
             this.btEdit,
-            this.btDelete});
+            this.btDelete,
+            this.toolStripSeparator1,
+            this.cbUser,
+            this.toolStripLabel1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(800, 25);
@@ -118,23 +127,26 @@ namespace Work
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
+            this.lbCurrentUser});
             this.statusStrip1.Location = new System.Drawing.Point(0, 428);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(800, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // tabControl1
+            // tabMainControl
             // 
-            this.tabControl1.Controls.Add(this.tabWork);
-            this.tabControl1.Controls.Add(this.tabUsers);
-            this.tabControl1.Controls.Add(this.tabProjects);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 25);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(800, 403);
-            this.tabControl1.TabIndex = 2;
+            this.tabMainControl.Controls.Add(this.tabWork);
+            this.tabMainControl.Controls.Add(this.tabUsers);
+            this.tabMainControl.Controls.Add(this.tabProjects);
+            this.tabMainControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabMainControl.Location = new System.Drawing.Point(0, 25);
+            this.tabMainControl.Name = "tabMainControl";
+            this.tabMainControl.SelectedIndex = 0;
+            this.tabMainControl.Size = new System.Drawing.Size(800, 403);
+            this.tabMainControl.TabIndex = 2;
             // 
             // tabWork
             // 
@@ -176,6 +188,62 @@ namespace Work
             this.dgWork.DoubleClick += new System.EventHandler(this.dgWork_DoubleClick);
             this.dgWork.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgWork_KeyUp);
             // 
+            // tabUsers
+            // 
+            this.tabUsers.Location = new System.Drawing.Point(4, 22);
+            this.tabUsers.Name = "tabUsers";
+            this.tabUsers.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUsers.Size = new System.Drawing.Size(792, 377);
+            this.tabUsers.TabIndex = 1;
+            this.tabUsers.Text = "Users";
+            this.tabUsers.UseVisualStyleBackColor = true;
+            // 
+            // tabProjects
+            // 
+            this.tabProjects.Location = new System.Drawing.Point(4, 22);
+            this.tabProjects.Name = "tabProjects";
+            this.tabProjects.Padding = new System.Windows.Forms.Padding(3);
+            this.tabProjects.Size = new System.Drawing.Size(792, 377);
+            this.tabProjects.TabIndex = 2;
+            this.tabProjects.Text = "Projects";
+            this.tabProjects.UseVisualStyleBackColor = true;
+            // 
+            // cbUser
+            // 
+            this.cbUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.cbUser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbUser.Name = "cbUser";
+            this.cbUser.Size = new System.Drawing.Size(121, 25);
+            // 
+            // toolStripLabel1
+            // 
+            this.toolStripLabel1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.toolStripLabel1.Name = "toolStripLabel1";
+            this.toolStripLabel1.Size = new System.Drawing.Size(33, 22);
+            this.toolStripLabel1.Text = "User:";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(75, 17);
+            this.toolStripStatusLabel1.Text = "Current user:";
+            // 
+            // lbCurrentUser
+            // 
+            this.lbCurrentUser.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbCurrentUser.Name = "lbCurrentUser";
+            this.lbCurrentUser.Size = new System.Drawing.Size(31, 17);
+            this.lbCurrentUser.Text = "user";
+            // 
+            // bsWork
+            // 
+            this.bsWork.DataSource = typeof(WorkLib.Model.WorkHour);
+            // 
             // workHourIDDataGridViewTextBoxColumn
             // 
             this.workHourIDDataGridViewTextBoxColumn.DataPropertyName = "WorkHourID";
@@ -191,7 +259,6 @@ namespace Work
             this.userIdDataGridViewTextBoxColumn.Name = "userIdDataGridViewTextBoxColumn";
             this.userIdDataGridViewTextBoxColumn.ReadOnly = true;
             this.userIdDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.userIdDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // dateDataGridViewTextBoxColumn
             // 
@@ -256,36 +323,12 @@ namespace Work
             this.descriptionDataGridViewTextBoxColumn.Name = "descriptionDataGridViewTextBoxColumn";
             this.descriptionDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // bsWork
-            // 
-            this.bsWork.DataSource = typeof(WorkLib.Model.WorkHour);
-            // 
-            // tabUsers
-            // 
-            this.tabUsers.Location = new System.Drawing.Point(4, 22);
-            this.tabUsers.Name = "tabUsers";
-            this.tabUsers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUsers.Size = new System.Drawing.Size(792, 377);
-            this.tabUsers.TabIndex = 1;
-            this.tabUsers.Text = "Users";
-            this.tabUsers.UseVisualStyleBackColor = true;
-            // 
-            // tabProjects
-            // 
-            this.tabProjects.Location = new System.Drawing.Point(4, 22);
-            this.tabProjects.Name = "tabProjects";
-            this.tabProjects.Padding = new System.Windows.Forms.Padding(3);
-            this.tabProjects.Size = new System.Drawing.Size(792, 377);
-            this.tabProjects.TabIndex = 2;
-            this.tabProjects.Text = "Projects";
-            this.tabProjects.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabMainControl);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -296,12 +339,14 @@ namespace Work
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
+            this.tabMainControl.ResumeLayout(false);
             this.tabWork.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgWork)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bsWork)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsUsers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsProjects)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsWork)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -315,7 +360,7 @@ namespace Work
         private System.Windows.Forms.ToolStripButton btEdit;
         private System.Windows.Forms.ToolStripButton btDelete;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabMainControl;
         private System.Windows.Forms.TabPage tabWork;
         private System.Windows.Forms.DataGridView dgWork;
         private System.Windows.Forms.TabPage tabUsers;
@@ -323,8 +368,13 @@ namespace Work
         private System.Windows.Forms.BindingSource bsWork;
         private System.Windows.Forms.BindingSource bsUsers;
         private System.Windows.Forms.BindingSource bsProjects;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripComboBox cbUser;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel lbCurrentUser;
         private System.Windows.Forms.DataGridViewTextBoxColumn workHourIDDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewComboBoxColumn userIdDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn userIdDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn fromDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn toDataGridViewTextBoxColumn;

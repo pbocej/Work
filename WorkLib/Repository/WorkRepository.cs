@@ -18,6 +18,40 @@ namespace WorkLib.Repository
         #region Users
 
         /// <summary>
+        /// Gets all users.
+        /// </summary>
+        /// <param name="context">The data context.</param>
+        /// <returns>IEnumerable&lt;User&gt;</returns>
+        /// <exception cref="WorkLib.Model.AppException">Error getting users</exception>
+        public static User[] GetAllUsers(DbContext context = null)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                {
+                    return GetAllUsers(c);
+                }
+            try
+            {
+                using (var cmd = context.CreateCommand(
+                    "select * from Users",
+                    CommandType.Text))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        var users = new List<User>();
+                        while (reader.Read())
+                            users.Add(new User(reader));
+                        users.OrderBy(u => u.FullName);
+                        return users.ToArray();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("Error getting users", ex);
+            }
+        }
+        /// <summary>
         /// Gets the user by Id.
         /// </summary>
         /// <param name="id">The user identifier.</param>

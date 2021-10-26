@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using WorkLib.Model;
+using WorkLib.Repository;
 
 namespace Work
 {
@@ -12,8 +14,28 @@ namespace Work
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            lbCurrentUser.Text = Global.CurrenntUser.FullName;
+            RefreshUsers();
             RefreshData();
+            dgWork.Focus();
+        }
 
+        private void RefreshUsers()
+        {
+            cbUser.Items.Clear();
+            if (Global.CurrenntUser.GroupType == GroupType.Administrators)
+            {
+                cbUser.Items.AddRange(WorkRepository.GetAllUsers());
+                cbUser.SelectedItem = Global.CurrenntUser;
+            }
+            else
+            {
+                cbUser.Items.Add(Global.CurrenntUser);
+                cbUser.SelectedItem = Global.CurrenntUser;
+                tabMainControl.TabPages.Remove(tabUsers);
+                tabMainControl.TabPages.Remove(tabProjects);
+                dgWork.Columns[1].Visible = false;
+            }
         }
 
         void RefreshData()

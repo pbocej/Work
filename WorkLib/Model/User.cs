@@ -70,9 +70,24 @@ namespace WorkLib.Model
         /// <summary>Gets or sets the user group identifier.</summary>
         /// <value>The user group identifier.</value>
         public int UserGroupId { get; set; }
+        /// <summary>
+        /// Gets the type of the group.
+        /// </summary>
+        /// <value>
+        /// The type of the group.
+        /// </value>
         public GroupType GroupType => UserGroupId == 0 
             ? GroupType.Administrators 
             : GroupType.Users;
-
+        /// <summary>
+        /// Converts to string.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
+        public override string ToString()
+        {
+            return FullName;
+        }
     }
 }
