@@ -41,19 +41,15 @@ namespace Work
             this.btAdd = new System.Windows.Forms.ToolStripButton();
             this.btEdit = new System.Windows.Forms.ToolStripButton();
             this.btDelete = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.cbUser = new System.Windows.Forms.ToolStripComboBox();
+            this.lbUser = new System.Windows.Forms.ToolStripLabel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.lbCurrentUser = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabMainControl = new System.Windows.Forms.TabControl();
             this.tabWork = new System.Windows.Forms.TabPage();
             this.dgWork = new System.Windows.Forms.DataGridView();
-            this.tabUsers = new System.Windows.Forms.TabPage();
-            this.tabProjects = new System.Windows.Forms.TabPage();
-            this.cbUser = new System.Windows.Forms.ToolStripComboBox();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lbCurrentUser = new System.Windows.Forms.ToolStripStatusLabel();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.workHourIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -64,6 +60,8 @@ namespace Work
             this.subjectDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsWork = new System.Windows.Forms.BindingSource(this.components);
+            this.tabUsers = new System.Windows.Forms.TabPage();
+            this.dgUsers = new System.Windows.Forms.DataGridView();
             this.userIdDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.passwordDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -75,6 +73,8 @@ namespace Work
             this.userGroupIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bsUsers = new System.Windows.Forms.BindingSource(this.components);
+            this.tabProjects = new System.Windows.Forms.TabPage();
+            this.dgProjects = new System.Windows.Forms.DataGridView();
             this.projectIdDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.projectNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.projectDescriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -84,12 +84,12 @@ namespace Work
             this.tabMainControl.SuspendLayout();
             this.tabWork.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgWork)).BeginInit();
-            this.tabUsers.SuspendLayout();
-            this.tabProjects.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsWork)).BeginInit();
+            this.tabUsers.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgUsers)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsUsers)).BeginInit();
+            this.tabProjects.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgProjects)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsProjects)).BeginInit();
             this.SuspendLayout();
             // 
@@ -102,7 +102,7 @@ namespace Work
             this.btDelete,
             this.toolStripSeparator1,
             this.cbUser,
-            this.toolStripLabel1});
+            this.lbUser});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(800, 25);
@@ -146,6 +146,26 @@ namespace Work
             this.btDelete.Text = "Delete";
             this.btDelete.ToolTipText = "Delete (Del)";
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // cbUser
+            // 
+            this.cbUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.cbUser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbUser.Name = "cbUser";
+            this.cbUser.Size = new System.Drawing.Size(121, 25);
+            this.cbUser.SelectedIndexChanged += new System.EventHandler(this.cbUser_SelectedIndexChanged);
+            // 
+            // lbUser
+            // 
+            this.lbUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.lbUser.Name = "lbUser";
+            this.lbUser.Size = new System.Drawing.Size(33, 22);
+            this.lbUser.Text = "User:";
+            // 
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -156,6 +176,19 @@ namespace Work
             this.statusStrip1.Size = new System.Drawing.Size(800, 22);
             this.statusStrip1.TabIndex = 1;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(75, 17);
+            this.toolStripStatusLabel1.Text = "Current user:";
+            // 
+            // lbCurrentUser
+            // 
+            this.lbCurrentUser.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lbCurrentUser.Name = "lbCurrentUser";
+            this.lbCurrentUser.Size = new System.Drawing.Size(31, 17);
+            this.lbCurrentUser.Text = "user";
             // 
             // tabMainControl
             // 
@@ -209,110 +242,6 @@ namespace Work
             this.dgWork.TabIndex = 0;
             this.dgWork.DoubleClick += new System.EventHandler(this.dgWork_DoubleClick);
             this.dgWork.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgWork_KeyUp);
-            // 
-            // tabUsers
-            // 
-            this.tabUsers.Controls.Add(this.dataGridView2);
-            this.tabUsers.Location = new System.Drawing.Point(4, 22);
-            this.tabUsers.Name = "tabUsers";
-            this.tabUsers.Padding = new System.Windows.Forms.Padding(3);
-            this.tabUsers.Size = new System.Drawing.Size(792, 377);
-            this.tabUsers.TabIndex = 1;
-            this.tabUsers.Text = "Users";
-            this.tabUsers.UseVisualStyleBackColor = true;
-            // 
-            // tabProjects
-            // 
-            this.tabProjects.Controls.Add(this.dataGridView1);
-            this.tabProjects.Location = new System.Drawing.Point(4, 22);
-            this.tabProjects.Name = "tabProjects";
-            this.tabProjects.Padding = new System.Windows.Forms.Padding(3);
-            this.tabProjects.Size = new System.Drawing.Size(792, 377);
-            this.tabProjects.TabIndex = 2;
-            this.tabProjects.Text = "Projects";
-            this.tabProjects.UseVisualStyleBackColor = true;
-            // 
-            // cbUser
-            // 
-            this.cbUser.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.cbUser.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbUser.Name = "cbUser";
-            this.cbUser.Size = new System.Drawing.Size(121, 25);
-            this.cbUser.SelectedIndexChanged += new System.EventHandler(this.cbUser_SelectedIndexChanged);
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(33, 22);
-            this.toolStripLabel1.Text = "User:";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(75, 17);
-            this.toolStripStatusLabel1.Text = "Current user:";
-            // 
-            // lbCurrentUser
-            // 
-            this.lbCurrentUser.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lbCurrentUser.Name = "lbCurrentUser";
-            this.lbCurrentUser.Size = new System.Drawing.Size(31, 17);
-            this.lbCurrentUser.Text = "user";
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AutoGenerateColumns = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.projectIdDataGridViewTextBoxColumn1,
-            this.projectNameDataGridViewTextBoxColumn,
-            this.projectDescriptionDataGridViewTextBoxColumn});
-            this.dataGridView1.DataSource = this.bsProjects;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView1.MultiSelect = false;
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(786, 371);
-            this.dataGridView1.TabIndex = 1;
-            // 
-            // dataGridView2
-            // 
-            this.dataGridView2.AllowUserToAddRows = false;
-            this.dataGridView2.AllowUserToDeleteRows = false;
-            this.dataGridView2.AutoGenerateColumns = false;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.userIdDataGridViewTextBoxColumn1,
-            this.userNameDataGridViewTextBoxColumn,
-            this.passwordDataGridViewTextBoxColumn,
-            this.firstNameDataGridViewTextBoxColumn,
-            this.lastNameDataGridViewTextBoxColumn,
-            this.fullNameDataGridViewTextBoxColumn,
-            this.emailDataGridViewTextBoxColumn,
-            this.phoneDataGridViewTextBoxColumn,
-            this.userGroupIdDataGridViewTextBoxColumn,
-            this.groupTypeDataGridViewTextBoxColumn});
-            this.dataGridView2.DataSource = this.bsUsers;
-            this.dataGridView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView2.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView2.MultiSelect = false;
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.ReadOnly = true;
-            this.dataGridView2.RowHeadersVisible = false;
-            this.dataGridView2.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView2.Size = new System.Drawing.Size(786, 371);
-            this.dataGridView2.TabIndex = 2;
             // 
             // workHourIDDataGridViewTextBoxColumn
             // 
@@ -398,6 +327,45 @@ namespace Work
             // 
             this.bsWork.DataSource = typeof(WorkLib.Model.WorkHour);
             // 
+            // tabUsers
+            // 
+            this.tabUsers.Controls.Add(this.dgUsers);
+            this.tabUsers.Location = new System.Drawing.Point(4, 22);
+            this.tabUsers.Name = "tabUsers";
+            this.tabUsers.Padding = new System.Windows.Forms.Padding(3);
+            this.tabUsers.Size = new System.Drawing.Size(792, 377);
+            this.tabUsers.TabIndex = 1;
+            this.tabUsers.Text = "Users";
+            this.tabUsers.UseVisualStyleBackColor = true;
+            // 
+            // dgUsers
+            // 
+            this.dgUsers.AllowUserToAddRows = false;
+            this.dgUsers.AllowUserToDeleteRows = false;
+            this.dgUsers.AutoGenerateColumns = false;
+            this.dgUsers.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgUsers.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.userIdDataGridViewTextBoxColumn1,
+            this.userNameDataGridViewTextBoxColumn,
+            this.passwordDataGridViewTextBoxColumn,
+            this.firstNameDataGridViewTextBoxColumn,
+            this.lastNameDataGridViewTextBoxColumn,
+            this.fullNameDataGridViewTextBoxColumn,
+            this.emailDataGridViewTextBoxColumn,
+            this.phoneDataGridViewTextBoxColumn,
+            this.userGroupIdDataGridViewTextBoxColumn,
+            this.groupTypeDataGridViewTextBoxColumn});
+            this.dgUsers.DataSource = this.bsUsers;
+            this.dgUsers.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgUsers.Location = new System.Drawing.Point(3, 3);
+            this.dgUsers.MultiSelect = false;
+            this.dgUsers.Name = "dgUsers";
+            this.dgUsers.ReadOnly = true;
+            this.dgUsers.RowHeadersVisible = false;
+            this.dgUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgUsers.Size = new System.Drawing.Size(786, 371);
+            this.dgUsers.TabIndex = 2;
+            // 
             // userIdDataGridViewTextBoxColumn1
             // 
             this.userIdDataGridViewTextBoxColumn1.DataPropertyName = "UserId";
@@ -476,6 +444,38 @@ namespace Work
             // 
             this.bsUsers.DataSource = typeof(WorkLib.Model.User);
             // 
+            // tabProjects
+            // 
+            this.tabProjects.Controls.Add(this.dgProjects);
+            this.tabProjects.Location = new System.Drawing.Point(4, 22);
+            this.tabProjects.Name = "tabProjects";
+            this.tabProjects.Padding = new System.Windows.Forms.Padding(3);
+            this.tabProjects.Size = new System.Drawing.Size(792, 377);
+            this.tabProjects.TabIndex = 2;
+            this.tabProjects.Text = "Projects";
+            this.tabProjects.UseVisualStyleBackColor = true;
+            // 
+            // dgProjects
+            // 
+            this.dgProjects.AllowUserToAddRows = false;
+            this.dgProjects.AllowUserToDeleteRows = false;
+            this.dgProjects.AutoGenerateColumns = false;
+            this.dgProjects.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgProjects.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.projectIdDataGridViewTextBoxColumn1,
+            this.projectNameDataGridViewTextBoxColumn,
+            this.projectDescriptionDataGridViewTextBoxColumn});
+            this.dgProjects.DataSource = this.bsProjects;
+            this.dgProjects.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgProjects.Location = new System.Drawing.Point(3, 3);
+            this.dgProjects.MultiSelect = false;
+            this.dgProjects.Name = "dgProjects";
+            this.dgProjects.ReadOnly = true;
+            this.dgProjects.RowHeadersVisible = false;
+            this.dgProjects.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgProjects.Size = new System.Drawing.Size(786, 371);
+            this.dgProjects.TabIndex = 1;
+            // 
             // projectIdDataGridViewTextBoxColumn1
             // 
             this.projectIdDataGridViewTextBoxColumn1.DataPropertyName = "ProjectId";
@@ -527,12 +527,12 @@ namespace Work
             this.tabMainControl.ResumeLayout(false);
             this.tabWork.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgWork)).EndInit();
-            this.tabUsers.ResumeLayout(false);
-            this.tabProjects.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsWork)).EndInit();
+            this.tabUsers.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgUsers)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsUsers)).EndInit();
+            this.tabProjects.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgProjects)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsProjects)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -557,10 +557,10 @@ namespace Work
         private System.Windows.Forms.BindingSource bsProjects;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripComboBox cbUser;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
+        private System.Windows.Forms.ToolStripLabel lbUser;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel lbCurrentUser;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgProjects;
         private System.Windows.Forms.DataGridViewTextBoxColumn workHourIDDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn userIdDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn dateDataGridViewTextBoxColumn;
@@ -574,7 +574,7 @@ namespace Work
         private System.Windows.Forms.DataGridViewTextBoxColumn projectNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn projectDescriptionDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn usersDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.DataGridView dgUsers;
         private System.Windows.Forms.DataGridViewTextBoxColumn userIdDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewTextBoxColumn userNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn passwordDataGridViewTextBoxColumn;

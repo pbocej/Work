@@ -47,16 +47,22 @@ namespace Work
                 {
                     case 0:     // work hours
                         bsWork.DataSource = new ObservableCollection<WorkHour>(WorkRepository.GetAllWork((cbUser.SelectedItem as User).UserId));
+                        SelectedGrid(dgWork);
                         break;
                     case 1:     // users
                         bsUsers.DataSource = new ObservableCollection<User>(WorkRepository.GetAllUsers());
+                        SelectedGrid(dgUsers);
                         break;
                     case 2:     // projects
                         bsProjects.DataSource = new ObservableCollection<Project>(WorkRepository.GetAllProjects());
+                        SelectedGrid(dgProjects);
                         break;
                     default:
                         break;
                 }
+                cbUser.Visible = lbUser.Visible = 
+                    (Global.CurrenntUser.GroupType == GroupType.Administrators
+                    && tabMainControl.SelectedIndex == 0);
             }
             catch (AppException ex)
             {
@@ -68,6 +74,12 @@ namespace Work
             }
         }
 
+        private void SelectedGrid(DataGridView dg)
+        {
+            dg.Focus();
+            if (dg.Rows.Count > 0)
+                dg.Rows[0].Selected = true;
+        }
         private void dgWork_DoubleClick(object sender, EventArgs e)
         {
 
@@ -75,13 +87,46 @@ namespace Work
 
         private void dgWork_KeyUp(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
+            switch (tabMainControl.SelectedIndex)
             {
-                case Keys.Enter:    // edit
+                case 0:     // work hour
+                    switch (e.KeyCode)
+                    {
+                        case Keys.Enter:    // edit
+                            break;
+                        case Keys.Insert:   // add
+                            break;
+                        case Keys.Delete:   // delete
+                            break;
+                        default:
+                            break;
+                    }
+                    break;  
+                case 1:     // user
+                    switch (e.KeyCode)
+                    {
+                        case Keys.Enter:    // edit
+                            break;
+                        case Keys.Insert:   // add
+                            break;
+                        case Keys.Delete:   // delete
+                            break;
+                        default:
+                            break;
+                    }
                     break;
-                case Keys.Insert:   // add
-                    break;
-                case Keys.Delete:   // delete
+                case 2:     // project
+                    switch (e.KeyCode)
+                    {
+                        case Keys.Enter:    // edit
+                            break;
+                        case Keys.Insert:   // add
+                            break;
+                        case Keys.Delete:   // delete
+                            break;
+                        default:
+                            break;
+                    }
                     break;
                 default:
                     break;
