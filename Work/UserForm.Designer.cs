@@ -38,21 +38,21 @@ namespace Work
             System.Windows.Forms.Label userGroupIdLabel;
             this.bsUser = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.phoneTextBox = new System.Windows.Forms.TextBox();
+            this.emailTextBox = new System.Windows.Forms.TextBox();
+            this.lastNameTextBox = new System.Windows.Forms.TextBox();
+            this.firstNameTextBox = new System.Windows.Forms.TextBox();
+            this.userNameTextBox = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lbProjects = new System.Windows.Forms.CheckedListBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.password2TextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.lbProjects = new System.Windows.Forms.CheckedListBox();
-            this.userNameTextBox = new System.Windows.Forms.TextBox();
-            this.firstNameTextBox = new System.Windows.Forms.TextBox();
-            this.lastNameTextBox = new System.Windows.Forms.TextBox();
-            this.emailTextBox = new System.Windows.Forms.TextBox();
-            this.phoneTextBox = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.userGroupIdComboBox = new System.Windows.Forms.ComboBox();
-            this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.btSave = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
             this.chbAllowAddNext = new System.Windows.Forms.CheckBox();
@@ -68,6 +68,60 @@ namespace Work
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // userNameLabel
+            // 
+            userNameLabel.AutoSize = true;
+            userNameLabel.Location = new System.Drawing.Point(18, 24);
+            userNameLabel.Name = "userNameLabel";
+            userNameLabel.Size = new System.Drawing.Size(63, 13);
+            userNameLabel.TabIndex = 0;
+            userNameLabel.Text = "User Name:";
+            // 
+            // firstNameLabel
+            // 
+            firstNameLabel.AutoSize = true;
+            firstNameLabel.Location = new System.Drawing.Point(21, 50);
+            firstNameLabel.Name = "firstNameLabel";
+            firstNameLabel.Size = new System.Drawing.Size(60, 13);
+            firstNameLabel.TabIndex = 2;
+            firstNameLabel.Text = "First Name:";
+            // 
+            // lastNameLabel
+            // 
+            lastNameLabel.AutoSize = true;
+            lastNameLabel.Location = new System.Drawing.Point(20, 76);
+            lastNameLabel.Name = "lastNameLabel";
+            lastNameLabel.Size = new System.Drawing.Size(61, 13);
+            lastNameLabel.TabIndex = 4;
+            lastNameLabel.Text = "Last Name:";
+            // 
+            // emailLabel
+            // 
+            emailLabel.AutoSize = true;
+            emailLabel.Location = new System.Drawing.Point(46, 117);
+            emailLabel.Name = "emailLabel";
+            emailLabel.Size = new System.Drawing.Size(35, 13);
+            emailLabel.TabIndex = 6;
+            emailLabel.Text = "Email:";
+            // 
+            // phoneLabel
+            // 
+            phoneLabel.AutoSize = true;
+            phoneLabel.Location = new System.Drawing.Point(40, 146);
+            phoneLabel.Name = "phoneLabel";
+            phoneLabel.Size = new System.Drawing.Size(41, 13);
+            phoneLabel.TabIndex = 8;
+            phoneLabel.Text = "Phone:";
+            // 
+            // userGroupIdLabel
+            // 
+            userGroupIdLabel.AutoSize = true;
+            userGroupIdLabel.Location = new System.Drawing.Point(5, 44);
+            userGroupIdLabel.Name = "userGroupIdLabel";
+            userGroupIdLabel.Size = new System.Drawing.Size(64, 13);
+            userGroupIdLabel.TabIndex = 0;
+            userGroupIdLabel.Text = "User Group:";
             // 
             // bsUser
             // 
@@ -92,6 +146,46 @@ namespace Work
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Basic information";
             // 
+            // phoneTextBox
+            // 
+            this.phoneTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "Phone", true));
+            this.phoneTextBox.Location = new System.Drawing.Point(87, 143);
+            this.phoneTextBox.Name = "phoneTextBox";
+            this.phoneTextBox.Size = new System.Drawing.Size(205, 20);
+            this.phoneTextBox.TabIndex = 5;
+            // 
+            // emailTextBox
+            // 
+            this.emailTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "Email", true));
+            this.emailTextBox.Location = new System.Drawing.Point(87, 114);
+            this.emailTextBox.Name = "emailTextBox";
+            this.emailTextBox.Size = new System.Drawing.Size(205, 20);
+            this.emailTextBox.TabIndex = 4;
+            // 
+            // lastNameTextBox
+            // 
+            this.lastNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "LastName", true));
+            this.lastNameTextBox.Location = new System.Drawing.Point(87, 73);
+            this.lastNameTextBox.Name = "lastNameTextBox";
+            this.lastNameTextBox.Size = new System.Drawing.Size(205, 20);
+            this.lastNameTextBox.TabIndex = 3;
+            // 
+            // firstNameTextBox
+            // 
+            this.firstNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "FirstName", true));
+            this.firstNameTextBox.Location = new System.Drawing.Point(87, 47);
+            this.firstNameTextBox.Name = "firstNameTextBox";
+            this.firstNameTextBox.Size = new System.Drawing.Size(205, 20);
+            this.firstNameTextBox.TabIndex = 2;
+            // 
+            // userNameTextBox
+            // 
+            this.userNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "UserName", true));
+            this.userNameTextBox.Location = new System.Drawing.Point(87, 21);
+            this.userNameTextBox.Name = "userNameTextBox";
+            this.userNameTextBox.Size = new System.Drawing.Size(205, 20);
+            this.userNameTextBox.TabIndex = 1;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.lbProjects);
@@ -101,6 +195,14 @@ namespace Work
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Projects";
+            // 
+            // lbProjects
+            // 
+            this.lbProjects.FormattingEnabled = true;
+            this.lbProjects.Location = new System.Drawing.Point(6, 24);
+            this.lbProjects.Name = "lbProjects";
+            this.lbProjects.Size = new System.Drawing.Size(303, 154);
+            this.lbProjects.TabIndex = 0;
             // 
             // groupBox3
             // 
@@ -115,35 +217,14 @@ namespace Work
             this.groupBox3.TabIndex = 8;
             this.groupBox3.TabStop = false;
             // 
-            // groupBox4
+            // passwordTextBox
             // 
-            this.groupBox4.Controls.Add(userGroupIdLabel);
-            this.groupBox4.Controls.Add(this.userGroupIdComboBox);
-            this.groupBox4.Location = new System.Drawing.Point(12, 213);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(312, 104);
-            this.groupBox4.TabIndex = 9;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "User type";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(22, 31);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(56, 13);
-            this.label6.TabIndex = 12;
-            this.label6.Text = "Password:";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 2);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(72, 17);
-            this.checkBox1.TabIndex = 10;
-            this.checkBox1.Text = "Password";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.passwordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "Password", true));
+            this.passwordTextBox.Location = new System.Drawing.Point(119, 28);
+            this.passwordTextBox.Name = "passwordTextBox";
+            this.passwordTextBox.PasswordChar = '*';
+            this.passwordTextBox.Size = new System.Drawing.Size(100, 20);
+            this.passwordTextBox.TabIndex = 16;
             // 
             // password2TextBox
             // 
@@ -162,107 +243,35 @@ namespace Work
             this.label7.TabIndex = 14;
             this.label7.Text = "Repeat password:";
             // 
-            // lbProjects
+            // checkBox1
             // 
-            this.lbProjects.FormattingEnabled = true;
-            this.lbProjects.Location = new System.Drawing.Point(6, 24);
-            this.lbProjects.Name = "lbProjects";
-            this.lbProjects.Size = new System.Drawing.Size(303, 154);
-            this.lbProjects.TabIndex = 0;
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(6, 2);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(72, 17);
+            this.checkBox1.TabIndex = 10;
+            this.checkBox1.Text = "Password";
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // userNameLabel
+            // label6
             // 
-            userNameLabel.AutoSize = true;
-            userNameLabel.Location = new System.Drawing.Point(18, 24);
-            userNameLabel.Name = "userNameLabel";
-            userNameLabel.Size = new System.Drawing.Size(63, 13);
-            userNameLabel.TabIndex = 0;
-            userNameLabel.Text = "User Name:";
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(22, 31);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(56, 13);
+            this.label6.TabIndex = 12;
+            this.label6.Text = "Password:";
             // 
-            // userNameTextBox
+            // groupBox4
             // 
-            this.userNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "UserName", true));
-            this.userNameTextBox.Location = new System.Drawing.Point(87, 21);
-            this.userNameTextBox.Name = "userNameTextBox";
-            this.userNameTextBox.Size = new System.Drawing.Size(205, 20);
-            this.userNameTextBox.TabIndex = 1;
-            // 
-            // firstNameLabel
-            // 
-            firstNameLabel.AutoSize = true;
-            firstNameLabel.Location = new System.Drawing.Point(21, 50);
-            firstNameLabel.Name = "firstNameLabel";
-            firstNameLabel.Size = new System.Drawing.Size(60, 13);
-            firstNameLabel.TabIndex = 2;
-            firstNameLabel.Text = "First Name:";
-            // 
-            // firstNameTextBox
-            // 
-            this.firstNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "FirstName", true));
-            this.firstNameTextBox.Location = new System.Drawing.Point(87, 47);
-            this.firstNameTextBox.Name = "firstNameTextBox";
-            this.firstNameTextBox.Size = new System.Drawing.Size(205, 20);
-            this.firstNameTextBox.TabIndex = 2;
-            // 
-            // lastNameLabel
-            // 
-            lastNameLabel.AutoSize = true;
-            lastNameLabel.Location = new System.Drawing.Point(20, 76);
-            lastNameLabel.Name = "lastNameLabel";
-            lastNameLabel.Size = new System.Drawing.Size(61, 13);
-            lastNameLabel.TabIndex = 4;
-            lastNameLabel.Text = "Last Name:";
-            // 
-            // lastNameTextBox
-            // 
-            this.lastNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "LastName", true));
-            this.lastNameTextBox.Location = new System.Drawing.Point(87, 73);
-            this.lastNameTextBox.Name = "lastNameTextBox";
-            this.lastNameTextBox.Size = new System.Drawing.Size(205, 20);
-            this.lastNameTextBox.TabIndex = 3;
-            // 
-            // emailLabel
-            // 
-            emailLabel.AutoSize = true;
-            emailLabel.Location = new System.Drawing.Point(46, 117);
-            emailLabel.Name = "emailLabel";
-            emailLabel.Size = new System.Drawing.Size(35, 13);
-            emailLabel.TabIndex = 6;
-            emailLabel.Text = "Email:";
-            // 
-            // emailTextBox
-            // 
-            this.emailTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "Email", true));
-            this.emailTextBox.Location = new System.Drawing.Point(87, 114);
-            this.emailTextBox.Name = "emailTextBox";
-            this.emailTextBox.Size = new System.Drawing.Size(205, 20);
-            this.emailTextBox.TabIndex = 4;
-            // 
-            // phoneLabel
-            // 
-            phoneLabel.AutoSize = true;
-            phoneLabel.Location = new System.Drawing.Point(40, 146);
-            phoneLabel.Name = "phoneLabel";
-            phoneLabel.Size = new System.Drawing.Size(41, 13);
-            phoneLabel.TabIndex = 8;
-            phoneLabel.Text = "Phone:";
-            // 
-            // phoneTextBox
-            // 
-            this.phoneTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "Phone", true));
-            this.phoneTextBox.Location = new System.Drawing.Point(87, 143);
-            this.phoneTextBox.Name = "phoneTextBox";
-            this.phoneTextBox.Size = new System.Drawing.Size(205, 20);
-            this.phoneTextBox.TabIndex = 5;
-            // 
-            // userGroupIdLabel
-            // 
-            userGroupIdLabel.AutoSize = true;
-            userGroupIdLabel.Location = new System.Drawing.Point(5, 44);
-            userGroupIdLabel.Name = "userGroupIdLabel";
-            userGroupIdLabel.Size = new System.Drawing.Size(64, 13);
-            userGroupIdLabel.TabIndex = 0;
-            userGroupIdLabel.Text = "User Group:";
+            this.groupBox4.Controls.Add(userGroupIdLabel);
+            this.groupBox4.Controls.Add(this.userGroupIdComboBox);
+            this.groupBox4.Location = new System.Drawing.Point(12, 213);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(312, 104);
+            this.groupBox4.TabIndex = 9;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "User type";
             // 
             // userGroupIdComboBox
             // 
@@ -275,23 +284,15 @@ namespace Work
             this.userGroupIdComboBox.Size = new System.Drawing.Size(205, 21);
             this.userGroupIdComboBox.TabIndex = 1;
             // 
-            // passwordTextBox
-            // 
-            this.passwordTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "Password", true));
-            this.passwordTextBox.Location = new System.Drawing.Point(119, 28);
-            this.passwordTextBox.Name = "passwordTextBox";
-            this.passwordTextBox.PasswordChar = '*';
-            this.passwordTextBox.Size = new System.Drawing.Size(100, 20);
-            this.passwordTextBox.TabIndex = 16;
-            // 
             // btSave
             // 
             this.btSave.Location = new System.Drawing.Point(576, 340);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(75, 23);
             this.btSave.TabIndex = 10;
-            this.btSave.Text = "11";
+            this.btSave.Text = "Save";
             this.btSave.UseVisualStyleBackColor = true;
+            this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
             // btCancel
             // 
@@ -300,7 +301,7 @@ namespace Work
             this.btCancel.Name = "btCancel";
             this.btCancel.Size = new System.Drawing.Size(75, 23);
             this.btCancel.TabIndex = 11;
-            this.btCancel.Text = "12";
+            this.btCancel.Text = "Cancel";
             this.btCancel.UseVisualStyleBackColor = true;
             // 
             // chbAllowAddNext
@@ -308,13 +309,14 @@ namespace Work
             this.chbAllowAddNext.AutoSize = true;
             this.chbAllowAddNext.Location = new System.Drawing.Point(12, 344);
             this.chbAllowAddNext.Name = "chbAllowAddNext";
-            this.chbAllowAddNext.Size = new System.Drawing.Size(38, 17);
+            this.chbAllowAddNext.Size = new System.Drawing.Size(74, 17);
             this.chbAllowAddNext.TabIndex = 12;
-            this.chbAllowAddNext.Text = "13";
+            this.chbAllowAddNext.Text = "Stay open";
             this.chbAllowAddNext.UseVisualStyleBackColor = true;
             // 
             // UserForm
             // 
+            this.AcceptButton = this.btSave;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btCancel;

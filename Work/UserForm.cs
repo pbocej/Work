@@ -26,5 +26,10 @@ namespace Work
         {
             bsUser.DataSource = _user;
         }
+
+        private void btSave_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

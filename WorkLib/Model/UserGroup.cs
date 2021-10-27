@@ -12,6 +12,7 @@ namespace WorkLib.Model
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using WorkLib.Data;
 
     /// <summary>
     /// User group type
@@ -55,6 +56,16 @@ namespace WorkLib.Model
         [RegularExpression("[0,1]", ErrorMessage = "Only values 0 (administrators) or 1 (users) are enabled.")]
         [Display(Name = "Type")]
         public GroupType GroupType { get; set; }
+
+        public override void Delete(DbContext context = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Save(DbContext context = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 
 }

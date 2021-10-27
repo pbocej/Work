@@ -12,6 +12,7 @@ namespace WorkLib.Model
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using WorkLib.Data;
 
     /// <summary>Work hour object.</summary>
     public partial class WorkHour : Entity<WorkHour>
@@ -71,5 +72,15 @@ namespace WorkLib.Model
         /// <summary>Gets or sets the user identifier.</summary>
         /// <value>The user identifier.</value>
         public int UserId { get; set; }
+
+        public override void Delete(DbContext context = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Save(DbContext context = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

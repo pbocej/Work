@@ -12,7 +12,7 @@ namespace WorkLib.Model
 {
     /// <summary>Base class for entity.</summary>
     /// <typeparam name="T">IEntity class.</typeparam>
-    public class Entity<T> : IEntity where T : IEntity
+    public abstract class Entity<T> : IEntity where T : IEntity
     {
         /// <summary>Initializes a new instance of the <see cref="Entity{T}" /> class.</summary>
         /// <param name="data">The data.</param>
@@ -114,5 +114,19 @@ namespace WorkLib.Model
             int id = (int)prop.GetValue(this);
             return id.GetHashCode();
         }
+
+        /// <summary>
+        /// Saves current object to data.
+        /// </summary>
+        /// <param name="context">The data context.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public abstract void Save(DbContext context = null);
+
+        /// <summary>
+        /// Deletes the current object.
+        /// </summary>
+        /// <param name="context">The data context.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public abstract void Delete(DbContext context = null);
     }
 }

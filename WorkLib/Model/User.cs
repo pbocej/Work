@@ -12,6 +12,7 @@ namespace WorkLib.Model
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using WorkLib.Data;
     using WorkLib.Repository;
 
 
@@ -79,6 +80,27 @@ namespace WorkLib.Model
         public GroupType GroupType => UserGroupId == 0 
             ? GroupType.Administrators 
             : GroupType.Users;
+
+        /// <summary>
+        /// Deletes the current object.
+        /// </summary>
+        /// <param name="context">The data context.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public override void Delete(DbContext context = null)
+        {
+            WorkRepository.DeleteUser(this, context);
+        }
+
+        /// <summary>
+        /// Saves current object to data.
+        /// </summary>
+        /// <param name="context">The data context.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public override void Save(DbContext context = null)
+        {
+            WorkRepository.SaveUser(this, context);
+        }
+
         /// <summary>
         /// Converts to string.
         /// </summary>

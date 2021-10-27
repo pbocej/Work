@@ -15,6 +15,10 @@ namespace WorkLib.Repository
     /// </summary>
     public static class WorkRepository
     {
+        #region Entity
+
+        #endregion
+
         #region Users
 
         /// <summary>
@@ -110,6 +114,10 @@ namespace WorkLib.Repository
                     }
                 }
             }
+            catch (AppException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 throw new AppException($"Error getting user by name: {userName}", ex);
@@ -117,6 +125,109 @@ namespace WorkLib.Repository
             return null;
         }
 
+        /// <summary>
+        /// Deletes the user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="context">The context.</param>
+        /// <exception cref="WorkLib.Model.AppException">Error deleting user {user.FullName}.</exception>
+        public static void DeleteUser(User user, DbContext context)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                    DeleteUser(user, c);
+            try
+            {
+                using (var cmd = context.CreateCommand("delete from Users where UserId=id"))
+                {
+                    cmd.Parameters.Add(
+                        context.CreateParameter("id", user.UserId, DbType.Int32));
+                    var ret = cmd.ExecuteNonQuery();
+                    if (ret != 1)
+                        throw new AppException("Operation failed. No user deleted.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new AppException($"Error deleting user {user.FullName}.", ex);
+            }
+        }
+        /// <summary>
+        /// Saves the user.
+        /// </summary>
+        /// <param name="user">The user.</param>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        /// <exception cref="DbContext">
+        /// </exception>
+        public static User SaveUser(User user, DbContext context)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                    DeleteUser(user, c);
+            try
+            {
+                using (var cmd = context.CreateCommand())
+                {
+                    cmd.Parameters.Add(
+                        context.CreateParameter("UserName", user.UserName));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("Password", user.Password));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("FirstName", user.FirstName));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("LastName", user.LastName));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("Email", user.Email));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("Phone", user.Phone));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("UserGroupId", user.UserGroupId, DbType.Int32));
+                    if (user.UserId == 0) // insert
+                        cmd.CommandText = @"
+INSERT INTO [Users]
+	([UserName],[Password],[FirstName],[LastName],[Email],[Phone],[UserGroupId])
+     VALUES
+	(@UserName,@Password,@FirstName,@LastName,@Email,@Phone,@UserGroupId);
+SELECT @@IDENTITY;";
+                    else                  // edit
+                    {
+                        cmd.CommandText = @"
+UPDATE [Users]
+   SET [UserName] = @UserName,
+       [Password] = @Password,
+       [FirstName] = @FirstName,
+       [LastName] = @LastName,
+       [Email] = @Email,
+       [Phone] = @Phone,
+       [UserGroupId] = @UserGroupId
+ WHERE UserId=@UserId";
+                        cmd.Parameters.Add(
+                            context.CreateParameter("UserId", user.UserId, DbType.Int32));
+                    }
+                    var userId = cmd.ExecuteNonQuery();
+                    if (userId > 0) // OK
+                    {
+                        cmd.CommandText = "select * from Users where UserId=@UserId";
+                        cmd.Parameters.Clear();
+                        cmd.Parameters.Add(
+                            context.CreateParameter("UserId", userId, DbType.Int32));
+                        using (var r = cmd.ExecuteReader())
+                            if (r.Read())
+                                return new User(r);
+                    }
+                    throw new AppException("Operation failed. No user saved.");
+                }
+            }
+            catch (AppException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new AppException($"Error saving user {user.FullName}.", ex);
+            }
+        }
 
         /// <summary>
         /// Logins the specified user.

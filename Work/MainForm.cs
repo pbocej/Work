@@ -60,7 +60,7 @@ namespace Work
                     default:
                         break;
                 }
-                cbUser.Visible = lbUser.Visible = 
+                cbUser.Visible = lbUser.Visible =
                     (Global.CurrenntUser.GroupType == GroupType.Administrators
                     && tabMainControl.SelectedIndex == 0);
             }
@@ -87,46 +87,94 @@ namespace Work
 
         private void dgWork_KeyUp(object sender, KeyEventArgs e)
         {
-            switch (tabMainControl.SelectedIndex)
+            GridKeyUpp(e);
+        }
+
+        private void GridKeyUpp(KeyEventArgs e)
+        {
+            try
             {
-                case 0:     // work hour
-                    switch (e.KeyCode)
+                switch (tabMainControl.SelectedIndex)
+                {
+                    case 0:     // work hour
+                        switch (e.KeyCode)
+                        {
+                            case Keys.Enter:    // edit
+                                break;
+                            case Keys.Insert:   // add
+                                break;
+                            case Keys.Delete:   // delete
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case 1:     // user
+                        var user = (User)dgUsers.SelectedRows[0].DataBoundItem;
+                        switch (e.KeyCode)
+                        {
+                            case Keys.Enter:    // edit
+                                using (var frm = new UserForm(user))
+                                {
+                                    if (frm.ShowDialog(this) == DialogResult.OK)
+                                    {
+                                        RefreshData();
+                                        SelectRow(user);
+                                    }
+                                }
+                                break;
+                            case Keys.Insert:   // add
+                                break;
+                            case Keys.Delete:   // delete
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case 2:     // project
+                        switch (e.KeyCode)
+                        {
+                            case Keys.Enter:    // edit
+                                break;
+                            case Keys.Insert:   // add
+                                break;
+                            case Keys.Delete:   // delete
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (AppException ex)
+            {
+                MessageBox.Show(this, ex.FullMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SelectRow(IEntity entity)
+        {
+            switch (entity.GetType().Name)
+            {
+                case "WorkHour":
+                    break;
+                case "User":
+                    foreach (DataGridViewRow row in dgUsers.Rows)
                     {
-                        case Keys.Enter:    // edit
+                        if (((User)row.DataBoundItem).UserId == ((User)entity).UserId)
+                        {
+                            row.Selected = true;
                             break;
-                        case Keys.Insert:   // add
-                            break;
-                        case Keys.Delete:   // delete
-                            break;
-                        default:
-                            break;
-                    }
-                    break;  
-                case 1:     // user
-                    switch (e.KeyCode)
-                    {
-                        case Keys.Enter:    // edit
-                            break;
-                        case Keys.Insert:   // add
-                            break;
-                        case Keys.Delete:   // delete
-                            break;
-                        default:
-                            break;
+                        }
                     }
                     break;
-                case 2:     // project
-                    switch (e.KeyCode)
-                    {
-                        case Keys.Enter:    // edit
-                            break;
-                        case Keys.Insert:   // add
-                            break;
-                        case Keys.Delete:   // delete
-                            break;
-                        default:
-                            break;
-                    }
+                case "Project":
                     break;
                 default:
                     break;
@@ -153,6 +201,16 @@ namespace Work
         {
             if (tabMainControl.SelectedIndex == 0)
                 RefreshData();
+        }
+
+        private void dgUsers_KeyUp(object sender, KeyEventArgs e)
+        {
+            GridKeyUpp(e);
+        }
+
+        private void dgProjects_KeyUp(object sender, KeyEventArgs e)
+        {
+            GridKeyUpp(e);
         }
     }
 }

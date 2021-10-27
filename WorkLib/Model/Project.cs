@@ -12,6 +12,7 @@ namespace WorkLib.Model
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using WorkLib.Data;
 
     /// <summary>Project type</summary>
     public partial class Project : Entity<Project>
@@ -37,5 +38,15 @@ namespace WorkLib.Model
         /// <value>The project description.</value>
         [Display(Name = "Description")]
         public string ProjectDescription { get; set; }
+
+        public override void Delete(DbContext context = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Save(DbContext context = null)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
