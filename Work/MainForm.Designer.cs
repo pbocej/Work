@@ -241,6 +241,7 @@ namespace Work
             this.dgWork.Size = new System.Drawing.Size(786, 371);
             this.dgWork.TabIndex = 0;
             this.dgWork.DoubleClick += new System.EventHandler(this.dgWork_DoubleClick);
+            this.dgWork.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGrid_KeyDown);
             this.dgWork.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgWork_KeyUp);
             // 
             // workHourIDDataGridViewTextBoxColumn
@@ -365,6 +366,7 @@ namespace Work
             this.dgUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgUsers.Size = new System.Drawing.Size(786, 371);
             this.dgUsers.TabIndex = 2;
+            this.dgUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGrid_KeyDown);
             this.dgUsers.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgUsers_KeyUp);
             // 
             // userIdDataGridViewTextBoxColumn1
@@ -476,6 +478,7 @@ namespace Work
             this.dgProjects.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgProjects.Size = new System.Drawing.Size(786, 371);
             this.dgProjects.TabIndex = 1;
+            this.dgProjects.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGrid_KeyDown);
             this.dgProjects.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgProjects_KeyUp);
             // 
             // projectIdDataGridViewTextBoxColumn1

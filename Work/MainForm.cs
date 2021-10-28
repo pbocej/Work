@@ -76,9 +76,12 @@ namespace Work
 
         private void SelectedGrid(DataGridView dg)
         {
-            dg.Focus();
             if (dg.Rows.Count > 0)
+            {
                 dg.Rows[0].Selected = true;
+                dg.Rows[0].Cells[0].Selected = true;
+            }
+            dg.Select();
         }
         private void dgWork_DoubleClick(object sender, EventArgs e)
         {
@@ -88,6 +91,8 @@ namespace Work
         private void dgWork_KeyUp(object sender, KeyEventArgs e)
         {
             GridKeyUpp(e);
+            if (e.KeyCode == Keys.Enter)
+                e.Handled = false;
         }
 
         private void GridKeyUpp(KeyEventArgs e)
@@ -211,6 +216,12 @@ namespace Work
         private void dgProjects_KeyUp(object sender, KeyEventArgs e)
         {
             GridKeyUpp(e);
+        }
+
+        private void dataGrid_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyData == Keys.Enter)
+                e.Handled = true;
         }
     }
 }
