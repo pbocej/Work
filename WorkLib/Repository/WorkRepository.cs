@@ -164,7 +164,7 @@ namespace WorkLib.Repository
         {
             if (context == null)
                 using (var c = new DbContext())
-                    DeleteUser(user, c);
+                    return SaveUser(user, c);
             try
             {
                 using (var cmd = context.CreateCommand())
@@ -282,6 +282,76 @@ UPDATE [Users]
             return password;
         }
 
+        /// <summary>
+        /// Gets the user projects.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="allProjects">if set to <c>true</c> [all projects], otherwise only projects owned by user.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>UserProjects[]</returns>
+        /// <exception cref="WorkLib.Model.AppException">Loading projects for user failed.</exception>
+        public static UserProject[] GetUserProjects(int userId, bool allProjects = false, DbContext context = null)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                    return GetUserProjects(userId, allProjects, c);
+            try
+            {
+                using (var cmd = context.CreateCommand())
+                {
+                    var projects = new List<UserProject>();
+                    if (allProjects)
+                    {
+                        WorkRepository.GetAllProjects(context)
+                            .ToList()
+                            .ForEach(p => projects.Add(new UserProject(p)));
+                        cmd.CommandText = "select * from UserProjects where UserId=@userId";
+                        cmd.Parameters.Add(
+                            context.CreateParameter("userId", userId, DbType.Int32));
+                        using (var r = cmd.ExecuteReader())
+                        {
+                            while (r.Read())
+                            {
+                                var projectId = DbContext.GetValue<int>(r, "ProjectId");
+                                projects.Where(p => p.ProjectId == projectId)
+                                    .ToList()
+                                    .ForEach(p => { p.Owned = true; p.UserId = userId; return; });
+                            }
+                            return projects.ToArray();
+                        }
+                    }
+                    else
+                    {
+                        cmd.CommandText = "select * from UserProjects where UserId=@userId";
+                        cmd.Parameters.Add(
+                            context.CreateParameter("userId", userId, DbType.Int32));
+                        using (var r = cmd.ExecuteReader())
+                        {
+                            var list = new List<UserProject>();
+                            while (r.Read())
+                                list.Add(new UserProject(r));
+                            return list.ToArray();
+                        }
+                    }
+                }
+            }
+            catch (AppException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("Loading projects for user failed.", ex);
+            }
+
+            public static UserGroup[] GetUserGroups(DbContext context1)
+            {
+                if (context == null)
+                    using (var c = new DbContext())
+                        return GetUserGroups(c);
+
+            }
+        }
         #endregion
 
         #region Projects

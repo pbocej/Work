@@ -81,6 +81,23 @@ namespace WorkLib.Model
             ? GroupType.Administrators 
             : GroupType.Users;
 
+        private IEnumerable<UserProject> _userProjects;
+        /// <summary>
+        /// Gets or sets the user projects.
+        /// </summary>
+        /// <value>
+        /// The projects.
+        /// </value>
+        public IEnumerable<UserProject> UserProjects
+        {
+            get
+            {
+                if (_userProjects == null)
+                    _userProjects = WorkRepository.GetUserProjects(UserId);
+                return _userProjects;
+            }
+        }
+
         /// <summary>
         /// Deletes the current object.
         /// </summary>
@@ -96,9 +113,9 @@ namespace WorkLib.Model
         /// </summary>
         /// <param name="context">The data context.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public override void Save(DbContext context = null)
+        public override int Save(DbContext context = null)
         {
-            WorkRepository.SaveUser(this, context);
+            return WorkRepository.SaveUser(this, context).UserId;
         }
 
         /// <summary>

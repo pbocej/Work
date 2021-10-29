@@ -47,10 +47,8 @@ namespace WorkLib.Model
                 {
                     pi.SetValue(this, DbContext.GetValue(reader, pi.Name));
                 }
-                catch (Exception ex)
-                {
-                    throw new AppException($"Column '{pi.Name}' not found.", ex);
-                }
+                catch (Exception)
+                { } // column does not exists
             }
         }
 
@@ -120,7 +118,7 @@ namespace WorkLib.Model
         /// </summary>
         /// <param name="context">The data context.</param>
         /// <exception cref="System.NotImplementedException"></exception>
-        public abstract void Save(DbContext context = null);
+        public abstract int Save(DbContext context = null);
 
         /// <summary>
         /// Deletes the current object.

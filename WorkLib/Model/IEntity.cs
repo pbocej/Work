@@ -23,7 +23,7 @@ namespace WorkLib.Model
         /// Saves current object to data.
         /// </summary>
         /// <param name="context">The data context.</param>
-        void Save(DbContext context = null);
+        int Save(DbContext context = null);
         /// <summary>
         /// Deletes the current object.
         /// </summary>

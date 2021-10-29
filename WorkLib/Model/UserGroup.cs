@@ -57,12 +57,22 @@ namespace WorkLib.Model
         [Display(Name = "Type")]
         public GroupType GroupType { get; set; }
 
+        /// <summary>
+        /// Deletes the current object.
+        /// </summary>
+        /// <param name="context">The data context.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
         public override void Delete(DbContext context = null)
         {
             throw new NotImplementedException();
         }
 
-        public override void Save(DbContext context = null)
+        /// <summary>
+        /// Saves current object to data.
+        /// </summary>
+        /// <param name="context">The data context.</param>
+        /// <exception cref="System.NotImplementedException"></exception>
+        public override int Save(DbContext context = null)
         {
             throw new NotImplementedException();
         }

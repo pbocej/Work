@@ -77,7 +77,15 @@ namespace WorkLib.Repository.Tests
                 Assert.Fail(ex.FullMessage);
             }
         }
-        
+
         #endregion
+
+        [TestMethod()]
+        public void GetUserProjectsTest()
+        {
+            var up = WorkRepository.GetUserProjects(2, true, context);
+            Assert.IsNotNull(up);
+            Assert.AreNotEqual(0, up.Count());
+        }
     }
 }
