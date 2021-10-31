@@ -288,7 +288,11 @@ UPDATE [Users]
         /// <param name="userId">The user identifier.</param>
         /// <param name="allProjects">if set to <c>true</c> [all projects], otherwise only projects owned by user.</param>
         /// <param name="context">The context.</param>
-        /// <returns>UserProjects[]</returns>
+        /// <returns>
+        /// UserProjects[]
+        /// </returns>
+        /// <exception cref="DbContext">
+        /// </exception>
         /// <exception cref="WorkLib.Model.AppException">Loading projects for user failed.</exception>
         public static UserProject[] GetUserProjects(int userId, bool allProjects = false, DbContext context = null)
         {
@@ -342,14 +346,36 @@ UPDATE [Users]
             catch (Exception ex)
             {
                 throw new AppException("Loading projects for user failed.", ex);
-            }
-
-            public static UserGroup[] GetUserGroups(DbContext context1)
+            }            
+        }
+        /// <summary>
+        /// Gets the user groups.
+        /// </summary>
+        /// <param name="context">The data context.</param>
+        /// <returns></returns>
+        public static UserGroup[] GetUserGroups(DbContext context)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                    return GetUserGroups(c);
+            try
             {
-                if (context == null)
-                    using (var c = new DbContext())
-                        return GetUserGroups(c);
-
+                using (var cmd = context.CreateCommand("select * from UserGroups order by UserGroupId"))
+                {
+                    var list = new List<UserGroup>();
+                    using (var r = cmd.ExecuteReader())
+                        while (r.Read())
+                            list.Add(new UserGroup(r));
+                    return list.ToArray();
+                }
+            }
+            catch (AppException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("Loading user groups failed.", ex);
             }
         }
         #endregion

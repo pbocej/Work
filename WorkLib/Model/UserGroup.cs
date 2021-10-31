@@ -48,14 +48,6 @@ namespace WorkLib.Model
         [Required(ErrorMessage = "Group name is required.")]
         [Display(Name = "Name")]
         public string GroupName { get; set; }
-        /// <summary>Gets or sets a value indicating whether [group type].
-        /// 0 - administrators; 1 - users</summary>
-        /// <value>
-        ///   <c>true</c> if [group type]; otherwise, <c>false</c>.</value>
-        [Required(ErrorMessage = "Group type is required.")]
-        [RegularExpression("[0,1]", ErrorMessage = "Only values 0 (administrators) or 1 (users) are enabled.")]
-        [Display(Name = "Type")]
-        public GroupType GroupType { get; set; }
 
         /// <summary>
         /// Deletes the current object.

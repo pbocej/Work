@@ -1,5 +1,5 @@
 ﻿
-namespace Work
+namespace Work.Forms
 {
     partial class LoginForm
     {

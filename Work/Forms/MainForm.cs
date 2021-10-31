@@ -4,7 +4,7 @@ using WorkLib.Model;
 using WorkLib.Repository;
 using System.Collections.ObjectModel;
 
-namespace Work
+namespace Work.Forms
 {
     public partial class MainForm : Form
     {
@@ -88,27 +88,41 @@ namespace Work
 
         }
 
-        private void dgWork_KeyUp(object sender, KeyEventArgs e)
+        private void GridKeyUpp(object source, KeyEventArgs e)
         {
-            GridKeyUpp(e);
-            if (e.KeyCode == Keys.Enter)
-                e.Handled = false;
+            switch (e.KeyCode)
+            {
+                case Keys.Enter:    // edit
+                    DoAction(GridAction.Edit);
+                    break;
+                case Keys.Insert:   // add
+                    DoAction(GridAction.Add);
+                    break;
+                case Keys.Delete:   // delete
+                    DoAction(GridAction.Delete);
+                    break;
+                default:
+                    break;
+            }
         }
 
-        private void GridKeyUpp(KeyEventArgs e)
+        /// <summary>
+        /// Performs action (Add, Edidt, Delete)
+        /// </summary>
+        private void DoAction(GridAction action)
         {
             try
             {
                 switch (tabMainControl.SelectedIndex)
                 {
                     case 0:     // work hour
-                        switch (e.KeyCode)
+                        switch (action)
                         {
-                            case Keys.Enter:    // edit
+                            case GridAction.Edit:    // edit
                                 break;
-                            case Keys.Insert:   // add
+                            case GridAction.Add:   // add
                                 break;
-                            case Keys.Delete:   // delete
+                            case GridAction.Delete:   // delete
                                 break;
                             default:
                                 break;
@@ -116,9 +130,9 @@ namespace Work
                         break;
                     case 1:     // user
                         var user = (User)dgUsers.SelectedRows[0].DataBoundItem;
-                        switch (e.KeyCode)
+                        switch (action)
                         {
-                            case Keys.Enter:    // edit
+                            case GridAction.Edit:    // edit
                                 using (var frm = new UserForm(user))
                                 {
                                     if (frm.ShowDialog(this) == DialogResult.OK)
@@ -128,22 +142,22 @@ namespace Work
                                     }
                                 }
                                 break;
-                            case Keys.Insert:   // add
+                            case GridAction.Add:   // add
                                 break;
-                            case Keys.Delete:   // delete
+                            case GridAction.Delete:   // delete
                                 break;
                             default:
                                 break;
                         }
                         break;
                     case 2:     // project
-                        switch (e.KeyCode)
+                        switch (action)
                         {
-                            case Keys.Enter:    // edit
+                            case GridAction.Edit:    // edit
                                 break;
-                            case Keys.Insert:   // add
+                            case GridAction.Add:   // add
                                 break;
-                            case Keys.Delete:   // delete
+                            case GridAction.Delete:   // delete
                                 break;
                             default:
                                 break;
@@ -208,20 +222,25 @@ namespace Work
                 RefreshData();
         }
 
-        private void dgUsers_KeyUp(object sender, KeyEventArgs e)
-        {
-            GridKeyUpp(e);
-        }
-
-        private void dgProjects_KeyUp(object sender, KeyEventArgs e)
-        {
-            GridKeyUpp(e);
-        }
-
-        private void dataGrid_KeyDown(object sender, KeyEventArgs e)
+        private void GridKeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.Enter)
                 e.Handled = true;
+        }
+
+        private void btEdit_Click(object sender, EventArgs e)
+        {
+            DoAction(GridAction.Edit);
+        }
+
+        private void btAdd_Click(object sender, EventArgs e)
+        {
+            DoAction(GridAction.Add);
+        }
+
+        private void btDelete_Click(object sender, EventArgs e)
+        {
+            DoAction(GridAction.Delete);
         }
     }
 }

@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WorkLib.Data;
 using WorkLib.Model;
 using WorkLib.Repository;
 using System.ComponentModel.DataAnnotations;
 
-namespace Work
+namespace Work.Forms
 {
     public partial class UserForm : Form
     {
@@ -30,16 +31,23 @@ namespace Work
 
         private void LoadData()
         {
-            bsUser.DataSource = _user;
-            ((ListBox)lbProjects).DataSource = WorkRepository.GetAllProjects();
+            using (var context = new DbContext())
+            {
+                userGroupIdComboBox.DataSource = WorkRepository.GetUserGroups(context);
+                userGroupIdComboBox.DisplayMember = "GroupName";
+                userGroupIdComboBox.ValueMember = "UserGroupId";
+                ((ListBox)lbProjects).DataSource = WorkRepository.GetAllProjects(context);
+            }
             ((ListBox)lbProjects).DisplayMember = "ProjectName";
             ((ListBox)lbProjects).ValueMember = "ProjectId";
+            bsUser.DataSource = _user;
             for (int i = 0; i < lbProjects.Items.Count; i++)
             {
                 var project = lbProjects.Items[i] as Project;
                 if (_user.UserProjects.Any(p => p.ProjectId == project.ProjectId))
                     lbProjects.SetItemChecked(i, true);
             }
+            userGroupIdComboBox.SelectedValue = _user.UserGroupId;
         }
 
         private void btSave_Click(object sender, EventArgs e)
@@ -63,6 +71,12 @@ namespace Work
         public override bool ValidateChildren()
         {
             return base.ValidateChildren();
+        }
+
+        private void btCancel_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }

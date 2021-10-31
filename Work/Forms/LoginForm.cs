@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using WorkLib.Model;
 using WorkLib.Repository;
 
-namespace Work
+namespace Work.Forms
 {
     public partial class LoginForm : Form
     {

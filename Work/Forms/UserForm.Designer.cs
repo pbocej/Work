@@ -1,5 +1,5 @@
 ﻿
-namespace Work
+namespace Work.Forms
 {
     partial class UserForm
     {
@@ -47,16 +47,16 @@ namespace Work
             this.lbProjects = new System.Windows.Forms.CheckedListBox();
             this.gbPassword = new System.Windows.Forms.GroupBox();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.password2TextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.userGroupIdComboBox = new System.Windows.Forms.ComboBox();
             this.btSave = new System.Windows.Forms.Button();
-            this.btCancel = new System.Windows.Forms.Button();
             this.chbAllowAddNext = new System.Windows.Forms.CheckBox();
             this.bsUserProjects = new System.Windows.Forms.BindingSource(this.components);
+            this.btCancel = new System.Windows.Forms.Button();
             userNameLabel = new System.Windows.Forms.Label();
             firstNameLabel = new System.Windows.Forms.Label();
             lastNameLabel = new System.Windows.Forms.Label();
@@ -230,6 +230,16 @@ namespace Work
             this.passwordTextBox.Size = new System.Drawing.Size(100, 20);
             this.passwordTextBox.TabIndex = 16;
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(6, 0);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(72, 17);
+            this.checkBox1.TabIndex = 10;
+            this.checkBox1.Text = "Password";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // password2TextBox
             // 
             this.password2TextBox.Location = new System.Drawing.Point(119, 58);
@@ -246,16 +256,6 @@ namespace Work
             this.label7.Size = new System.Drawing.Size(93, 13);
             this.label7.TabIndex = 14;
             this.label7.Text = "Repeat password:";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 0);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(72, 17);
-            this.checkBox1.TabIndex = 10;
-            this.checkBox1.Text = "Password";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -299,16 +299,6 @@ namespace Work
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
-            // btCancel
-            // 
-            this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btCancel.Location = new System.Drawing.Point(474, 340);
-            this.btCancel.Name = "btCancel";
-            this.btCancel.Size = new System.Drawing.Size(75, 23);
-            this.btCancel.TabIndex = 11;
-            this.btCancel.Text = "Cancel";
-            this.btCancel.UseVisualStyleBackColor = true;
-            // 
             // chbAllowAddNext
             // 
             this.chbAllowAddNext.AutoSize = true;
@@ -323,6 +313,17 @@ namespace Work
             // 
             this.bsUserProjects.DataSource = typeof(WorkLib.Model.UserProject);
             // 
+            // btCancel
+            // 
+            this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btCancel.Location = new System.Drawing.Point(480, 339);
+            this.btCancel.Name = "btCancel";
+            this.btCancel.Size = new System.Drawing.Size(75, 23);
+            this.btCancel.TabIndex = 13;
+            this.btCancel.Text = "Cancel";
+            this.btCancel.UseVisualStyleBackColor = true;
+            this.btCancel.Click += new System.EventHandler(this.btCancel_Click);
+            // 
             // UserForm
             // 
             this.AcceptButton = this.btSave;
@@ -330,8 +331,8 @@ namespace Work
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btCancel;
             this.ClientSize = new System.Drawing.Size(661, 386);
-            this.Controls.Add(this.chbAllowAddNext);
             this.Controls.Add(this.btCancel);
+            this.Controls.Add(this.chbAllowAddNext);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.gbPassword);
@@ -377,8 +378,8 @@ namespace Work
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ComboBox userGroupIdComboBox;
         private System.Windows.Forms.Button btSave;
-        private System.Windows.Forms.Button btCancel;
         private System.Windows.Forms.CheckBox chbAllowAddNext;
         private System.Windows.Forms.BindingSource bsUserProjects;
+        private System.Windows.Forms.Button btCancel;
     }
 }

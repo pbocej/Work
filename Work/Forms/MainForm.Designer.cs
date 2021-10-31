@@ -1,5 +1,5 @@
 ﻿
-namespace Work
+namespace Work.Forms
 {
     partial class MainForm
     {
@@ -127,6 +127,7 @@ namespace Work
             this.btAdd.Size = new System.Drawing.Size(49, 22);
             this.btAdd.Text = "Add";
             this.btAdd.ToolTipText = "Add (Ins)";
+            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
             // 
             // btEdit
             // 
@@ -136,6 +137,7 @@ namespace Work
             this.btEdit.Size = new System.Drawing.Size(47, 22);
             this.btEdit.Text = "Edit";
             this.btEdit.ToolTipText = "Edit (Enter)";
+            this.btEdit.Click += new System.EventHandler(this.btEdit_Click);
             // 
             // btDelete
             // 
@@ -145,6 +147,7 @@ namespace Work
             this.btDelete.Size = new System.Drawing.Size(60, 22);
             this.btDelete.Text = "Delete";
             this.btDelete.ToolTipText = "Delete (Del)";
+            this.btDelete.Click += new System.EventHandler(this.btDelete_Click);
             // 
             // toolStripSeparator1
             // 
@@ -241,8 +244,8 @@ namespace Work
             this.dgWork.Size = new System.Drawing.Size(786, 371);
             this.dgWork.TabIndex = 0;
             this.dgWork.DoubleClick += new System.EventHandler(this.dgWork_DoubleClick);
-            this.dgWork.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGrid_KeyDown);
-            this.dgWork.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgWork_KeyUp);
+            this.dgWork.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GridKeyDown);
+            this.dgWork.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GridKeyUpp);
             // 
             // workHourIDDataGridViewTextBoxColumn
             // 
@@ -366,8 +369,8 @@ namespace Work
             this.dgUsers.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgUsers.Size = new System.Drawing.Size(786, 371);
             this.dgUsers.TabIndex = 2;
-            this.dgUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGrid_KeyDown);
-            this.dgUsers.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgUsers_KeyUp);
+            this.dgUsers.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GridKeyDown);
+            this.dgUsers.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GridKeyUpp);
             // 
             // userIdDataGridViewTextBoxColumn1
             // 
@@ -478,8 +481,8 @@ namespace Work
             this.dgProjects.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgProjects.Size = new System.Drawing.Size(786, 371);
             this.dgProjects.TabIndex = 1;
-            this.dgProjects.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dataGrid_KeyDown);
-            this.dgProjects.KeyUp += new System.Windows.Forms.KeyEventHandler(this.dgProjects_KeyUp);
+            this.dgProjects.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GridKeyDown);
+            this.dgProjects.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GridKeyUpp);
             // 
             // projectIdDataGridViewTextBoxColumn1
             // 
