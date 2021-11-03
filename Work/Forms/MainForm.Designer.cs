@@ -243,7 +243,6 @@ namespace Work.Forms
             this.dgWork.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgWork.Size = new System.Drawing.Size(786, 371);
             this.dgWork.TabIndex = 0;
-            this.dgWork.DoubleClick += new System.EventHandler(this.dgWork_DoubleClick);
             this.dgWork.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GridKeyDown);
             this.dgWork.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GridKeyUpp);
             // 

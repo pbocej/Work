@@ -83,10 +83,6 @@ namespace Work.Forms
             }
             dg.Select();
         }
-        private void dgWork_DoubleClick(object sender, EventArgs e)
-        {
-
-        }
 
         private void GridKeyUpp(object source, KeyEventArgs e)
         {
@@ -100,6 +96,9 @@ namespace Work.Forms
                     break;
                 case Keys.Delete:   // delete
                     DoAction(GridAction.Delete);
+                    break;
+                case Keys.F5:       // refresh
+                    RefreshData();
                     break;
                 default:
                     break;
@@ -143,8 +142,21 @@ namespace Work.Forms
                                 }
                                 break;
                             case GridAction.Add:   // add
+                                using (var frm = new UserForm(new User()))
+                                {
+                                    if (frm.ShowDialog(this) == DialogResult.OK)
+                                    {
+                                        RefreshData();
+                                        SelectRow(user);
+                                    }
+                                }
                                 break;
                             case GridAction.Delete:   // delete
+                                if (user != null && MessageBox.Show(this, $"Delete user {user.FullName}?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                                {
+                                    user.Delete();
+                                    RefreshData();
+                                }
                                 break;
                             default:
                                 break;

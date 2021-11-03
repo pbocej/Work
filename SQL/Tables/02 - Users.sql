@@ -4,7 +4,7 @@ GO
 CREATE TABLE [dbo].[Users](
 	[UserId] [int] IDENTITY(1,1) NOT NULL,
 	[UserName] [varchar](20) NOT NULL,
-	[Password] [varchar](256) NOT NULL,
+	[Password] [varchar](256) NULL,
 	[FirstName] [varchar](20) NULL,
 	[LastName] [varchar](30) NULL,
 	[Email] [varchar](50) NULL,

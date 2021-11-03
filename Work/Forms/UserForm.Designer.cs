@@ -47,15 +47,13 @@ namespace Work.Forms
             this.lbProjects = new System.Windows.Forms.CheckedListBox();
             this.gbPassword = new System.Windows.Forms.GroupBox();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.password2TextBox = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.userGroupIdComboBox = new System.Windows.Forms.ComboBox();
+            this.userGroupIdCombobox = new System.Windows.Forms.ComboBox();
             this.btSave = new System.Windows.Forms.Button();
             this.chbAllowAddNext = new System.Windows.Forms.CheckBox();
-            this.bsUserProjects = new System.Windows.Forms.BindingSource(this.components);
             this.btCancel = new System.Windows.Forms.Button();
             userNameLabel = new System.Windows.Forms.Label();
             firstNameLabel = new System.Windows.Forms.Label();
@@ -68,7 +66,6 @@ namespace Work.Forms
             this.groupBox2.SuspendLayout();
             this.gbPassword.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsUserProjects)).BeginInit();
             this.SuspendLayout();
             // 
             // userNameLabel
@@ -210,11 +207,9 @@ namespace Work.Forms
             // gbPassword
             // 
             this.gbPassword.Controls.Add(this.passwordTextBox);
-            this.gbPassword.Controls.Add(this.checkBox1);
             this.gbPassword.Controls.Add(this.password2TextBox);
             this.gbPassword.Controls.Add(this.label7);
             this.gbPassword.Controls.Add(this.label6);
-            this.gbPassword.Enabled = false;
             this.gbPassword.Location = new System.Drawing.Point(330, 213);
             this.gbPassword.Name = "gbPassword";
             this.gbPassword.Size = new System.Drawing.Size(321, 104);
@@ -229,16 +224,7 @@ namespace Work.Forms
             this.passwordTextBox.PasswordChar = '*';
             this.passwordTextBox.Size = new System.Drawing.Size(100, 20);
             this.passwordTextBox.TabIndex = 16;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(6, 0);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(72, 17);
-            this.checkBox1.TabIndex = 10;
-            this.checkBox1.Text = "Password";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.passwordTextBox.TextChanged += new System.EventHandler(this.passwordTextBox_TextChanged);
             // 
             // password2TextBox
             // 
@@ -268,8 +254,8 @@ namespace Work.Forms
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.userGroupIdCombobox);
             this.groupBox4.Controls.Add(userGroupIdLabel);
-            this.groupBox4.Controls.Add(this.userGroupIdComboBox);
             this.groupBox4.Location = new System.Drawing.Point(12, 213);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(312, 104);
@@ -277,17 +263,17 @@ namespace Work.Forms
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "User type";
             // 
-            // userGroupIdComboBox
+            // userGroupIdCombobox
             // 
-            this.userGroupIdComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "UserGroupId", true));
-            this.userGroupIdComboBox.DataSource = this.bsUser;
-            this.userGroupIdComboBox.DisplayMember = "GroupType";
-            this.userGroupIdComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.userGroupIdComboBox.FormattingEnabled = true;
-            this.userGroupIdComboBox.Location = new System.Drawing.Point(87, 41);
-            this.userGroupIdComboBox.Name = "userGroupIdComboBox";
-            this.userGroupIdComboBox.Size = new System.Drawing.Size(205, 21);
-            this.userGroupIdComboBox.TabIndex = 1;
+            this.userGroupIdCombobox.DataSource = this.bsUser;
+            this.userGroupIdCombobox.DisplayMember = "GroupType";
+            this.userGroupIdCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.userGroupIdCombobox.FormattingEnabled = true;
+            this.userGroupIdCombobox.Location = new System.Drawing.Point(87, 41);
+            this.userGroupIdCombobox.Name = "userGroupIdCombobox";
+            this.userGroupIdCombobox.Size = new System.Drawing.Size(205, 21);
+            this.userGroupIdCombobox.TabIndex = 6;
+            this.userGroupIdCombobox.ValueMember = "UserGroupId";
             // 
             // btSave
             // 
@@ -308,10 +294,6 @@ namespace Work.Forms
             this.chbAllowAddNext.TabIndex = 12;
             this.chbAllowAddNext.Text = "Stay open";
             this.chbAllowAddNext.UseVisualStyleBackColor = true;
-            // 
-            // bsUserProjects
-            // 
-            this.bsUserProjects.DataSource = typeof(WorkLib.Model.UserProject);
             // 
             // btCancel
             // 
@@ -352,7 +334,6 @@ namespace Work.Forms
             this.gbPassword.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsUserProjects)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -373,13 +354,11 @@ namespace Work.Forms
         private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.TextBox password2TextBox;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.ComboBox userGroupIdComboBox;
         private System.Windows.Forms.Button btSave;
         private System.Windows.Forms.CheckBox chbAllowAddNext;
-        private System.Windows.Forms.BindingSource bsUserProjects;
         private System.Windows.Forms.Button btCancel;
+        private System.Windows.Forms.ComboBox userGroupIdCombobox;
     }
 }

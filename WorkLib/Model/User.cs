@@ -19,7 +19,15 @@ namespace WorkLib.Model
     /// <summary>User type.</summary>
     public partial class User : Entity<User>
     {
-        /// <summary>Initializes a new instance of the <see cref="User" /> class.</summary>
+        /// <summary>
+        /// Initializes a new instance of the <see cref="User"/> class.
+        /// </summary>
+        public User()
+        { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="User"/> class.
+        /// </summary>
+        /// <param name="data">The data reader or data row.</param>
         public User(object data) : base(data)
         { }
 
@@ -81,20 +89,24 @@ namespace WorkLib.Model
             ? GroupType.Administrators 
             : GroupType.Users;
 
-        private IEnumerable<UserProject> _userProjects;
+        private UserProject[] _userProjects;
         /// <summary>
         /// Gets or sets the user projects.
         /// </summary>
         /// <value>
         /// The projects.
         /// </value>
-        public IEnumerable<UserProject> UserProjects
+        public UserProject[] UserProjects
         {
             get
             {
-                if (_userProjects == null)
+                if (_userProjects == null || _userProjects.Length == 0)
                     _userProjects = WorkRepository.GetUserProjects(UserId);
                 return _userProjects;
+            }
+            set
+            {
+                _userProjects = value;
             }
         }
 
@@ -127,6 +139,16 @@ namespace WorkLib.Model
         public override string ToString()
         {
             return FullName;
+        }
+        /// <summary>
+        /// Changes the password.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="context">The data context.</param>
+        public void ChangePassword(int userId, string password, DbContext context = null)
+        {
+            WorkRepository.ChangePassword(userId, password, context);
         }
     }
 }

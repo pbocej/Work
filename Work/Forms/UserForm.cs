@@ -17,6 +17,7 @@ namespace Work.Forms
     public partial class UserForm : Form
     {
         private User _user;
+        private bool _passwordChanged = false;
 
         public UserForm(User user)
         {
@@ -33,9 +34,9 @@ namespace Work.Forms
         {
             using (var context = new DbContext())
             {
-                userGroupIdComboBox.DataSource = WorkRepository.GetUserGroups(context);
-                userGroupIdComboBox.DisplayMember = "GroupName";
-                userGroupIdComboBox.ValueMember = "UserGroupId";
+                userGroupIdCombobox.DataSource = WorkRepository.GetUserGroups(context);
+                userGroupIdCombobox.DisplayMember = "GroupName";
+                userGroupIdCombobox.ValueMember = "UserGroupId";
                 ((ListBox)lbProjects).DataSource = WorkRepository.GetAllProjects(context);
             }
             ((ListBox)lbProjects).DisplayMember = "ProjectName";
@@ -47,36 +48,63 @@ namespace Work.Forms
                 if (_user.UserProjects.Any(p => p.ProjectId == project.ProjectId))
                     lbProjects.SetItemChecked(i, true);
             }
-            userGroupIdComboBox.SelectedValue = _user.UserGroupId;
+            if (_user.UserId == 0) // new user
+                userGroupIdCombobox.SelectedValue = 1;
+            else
+                userGroupIdCombobox.SelectedValue = _user.UserGroupId;
         }
 
         private void btSave_Click(object sender, EventArgs e)
         {
-            var vc = new ValidationContext(_user, null, null);
-            IList<ValidationResult> errors = new List<ValidationResult>();
-            if (!Validator.TryValidateObject(_user, vc, errors, false))
+            try
             {
-                var sb = new StringBuilder();
-                errors.ToList().ForEach(error => sb.AppendLine(error.ErrorMessage));
-                MessageBox.Show(this, sb.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var vc = new ValidationContext(_user, null, null);
+                IList<ValidationResult> errors = new List<ValidationResult>();
+                if (!Validator.TryValidateObject(_user, vc, errors, false))
+                {
+                    var sb = new StringBuilder();
+                    foreach (var error in errors)
+                        sb.AppendLine(error.ErrorMessage);
+                    MessageBox.Show(this, sb.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    _user.UserGroupId = (int)userGroupIdCombobox.SelectedValue;
+                    var up = new List<UserProject>();
+                    foreach (var item in lbProjects.CheckedItems)
+                        up.Add(new UserProject((Project)item)
+                        {
+                            UserId = _user.UserId,
+                            Owned = true
+                        });
+                    _user.UserProjects = up.ToArray();
+                    using (var context = new DbContext())
+                    {
+                        var userId = _user.Save(context);
+                        if (_user.Password == null)
+                            _user.Password = string.Empty;
+                        if (_passwordChanged)
+                            _user.ChangePassword(userId, _user.Password, context);
+                    }
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
             }
-            else
+            catch (AppException ex)
             {
-                _user.Save();
-                DialogResult = DialogResult.OK;
-                Close();
+                MessageBox.Show(this, ex.FullMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        public override bool ValidateChildren()
-        {
-            return base.ValidateChildren();
         }
 
         private void btCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void passwordTextBox_TextChanged(object sender, EventArgs e)
+        {
+            _passwordChanged = true;
         }
     }
 }

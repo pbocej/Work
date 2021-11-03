@@ -15,7 +15,7 @@ namespace WorkLib.Model
     public abstract class Entity<T> : IEntity where T : IEntity
     {
         /// <summary>Initializes a new instance of the <see cref="Entity{T}" /> class.</summary>
-        /// <param name="data">The data.</param>
+        /// <param name="data">The data reader or data row.</param>
         public Entity(object data = null)
         {
             if (data == null) return;

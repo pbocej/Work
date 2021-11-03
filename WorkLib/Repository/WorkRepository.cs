@@ -135,15 +135,19 @@ namespace WorkLib.Repository
         {
             if (context == null)
                 using (var c = new DbContext())
+                {
                     DeleteUser(user, c);
+                    return;
+                }
             try
             {
-                using (var cmd = context.CreateCommand("delete from Users where UserId=id"))
+                using (var cmd = context.CreateCommand(
+                    "delete from UserProjects where UserId=@userId;delete from Users where UserId=@userId;"))
                 {
                     cmd.Parameters.Add(
-                        context.CreateParameter("id", user.UserId, DbType.Int32));
+                        context.CreateParameter("userId", user.UserId, DbType.Int32));
                     var ret = cmd.ExecuteNonQuery();
-                    if (ret != 1)
+                    if (ret == 0)
                         throw new AppException("Operation failed. No user deleted.");
                 }
             }
@@ -189,7 +193,7 @@ INSERT INTO [Users]
 	([UserName],[Password],[FirstName],[LastName],[Email],[Phone],[UserGroupId])
      VALUES
 	(@UserName,@Password,@FirstName,@LastName,@Email,@Phone,@UserGroupId);
-SELECT @@IDENTITY;";
+SELECT CAST(@@IDENTITY AS int);";
                     else                  // edit
                     {
                         cmd.CommandText = @"
@@ -201,22 +205,34 @@ UPDATE [Users]
        [Email] = @Email,
        [Phone] = @Phone,
        [UserGroupId] = @UserGroupId
- WHERE UserId=@UserId";
+ WHERE UserId=@UserId;
+SELECT @UserId";
                         cmd.Parameters.Add(
                             context.CreateParameter("UserId", user.UserId, DbType.Int32));
                     }
-                    var userId = cmd.ExecuteNonQuery();
+                    var userId = (int)cmd.ExecuteScalar(); // get user id
                     if (userId > 0) // OK
                     {
-                        cmd.CommandText = "select * from Users where UserId=@UserId";
+                        user.UserId = userId; // get id after insert
+                        // user projects
+                        cmd.CommandText = "delete from UserProjects where UserId = @UserId";
                         cmd.Parameters.Clear();
                         cmd.Parameters.Add(
                             context.CreateParameter("UserId", userId, DbType.Int32));
-                        using (var r = cmd.ExecuteReader())
-                            if (r.Read())
-                                return new User(r);
+                        cmd.ExecuteNonQuery();
+                        foreach (var up in user.UserProjects.Where(a => a.Owned))
+                        {
+                            cmd.CommandText = "INSERT INTO UserProjects (UserId, ProjectId) VALUES (@UserId, @ProjectId)";
+                            cmd.Parameters.Clear();
+                            cmd.Parameters.Add(
+                                context.CreateParameter("UserId", userId, DbType.Int32));
+                            cmd.Parameters.Add(
+                                context.CreateParameter("ProjectId", up.ProjectId, DbType.Int32));
+                            if (cmd.ExecuteNonQuery() != 1)
+                                throw new AppException("Error saving project for user.");
+                        }
                     }
-                    throw new AppException("Operation failed. No user saved.");
+                    return user;
                 }
             }
             catch (AppException)
@@ -274,6 +290,35 @@ UPDATE [Users]
             catch (Exception ex)
             {
                 throw new AppException("Login failed.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Changes the password.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="context">The data context.</param>
+        public static void ChangePassword(int userId, string password, DbContext context = null)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                    ChangePassword(userId, password, c);
+            try
+            {
+                using (var cmd = context.CreateCommand("update Users set Password=@password where UserId=@userId"))
+                {
+                    cmd.Parameters.Add(
+                        context.CreateParameter("password", HashPassword(password)));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("userId", userId, DbType.Int32));
+                    if (cmd.ExecuteNonQuery() != 1)
+                        throw new AppException("Password has not been changed.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("Error changing password.", ex);
             }
         }
 
