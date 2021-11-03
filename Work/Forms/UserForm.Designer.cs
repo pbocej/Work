@@ -53,7 +53,6 @@ namespace Work.Forms
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.userGroupIdCombobox = new System.Windows.Forms.ComboBox();
             this.btSave = new System.Windows.Forms.Button();
-            this.chbAllowAddNext = new System.Windows.Forms.CheckBox();
             this.btCancel = new System.Windows.Forms.Button();
             userNameLabel = new System.Windows.Forms.Label();
             firstNameLabel = new System.Windows.Forms.Label();
@@ -222,12 +221,13 @@ namespace Work.Forms
             this.passwordTextBox.Location = new System.Drawing.Point(119, 28);
             this.passwordTextBox.Name = "passwordTextBox";
             this.passwordTextBox.PasswordChar = '*';
-            this.passwordTextBox.Size = new System.Drawing.Size(100, 20);
+            this.passwordTextBox.Size = new System.Drawing.Size(180, 20);
             this.passwordTextBox.TabIndex = 16;
             this.passwordTextBox.TextChanged += new System.EventHandler(this.passwordTextBox_TextChanged);
             // 
             // password2TextBox
             // 
+            this.password2TextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "Password", true));
             this.password2TextBox.Location = new System.Drawing.Point(119, 58);
             this.password2TextBox.Name = "password2TextBox";
             this.password2TextBox.PasswordChar = '*';
@@ -285,16 +285,6 @@ namespace Work.Forms
             this.btSave.UseVisualStyleBackColor = true;
             this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
-            // chbAllowAddNext
-            // 
-            this.chbAllowAddNext.AutoSize = true;
-            this.chbAllowAddNext.Location = new System.Drawing.Point(12, 344);
-            this.chbAllowAddNext.Name = "chbAllowAddNext";
-            this.chbAllowAddNext.Size = new System.Drawing.Size(74, 17);
-            this.chbAllowAddNext.TabIndex = 12;
-            this.chbAllowAddNext.Text = "Stay open";
-            this.chbAllowAddNext.UseVisualStyleBackColor = true;
-            // 
             // btCancel
             // 
             this.btCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
@@ -314,7 +304,6 @@ namespace Work.Forms
             this.CancelButton = this.btCancel;
             this.ClientSize = new System.Drawing.Size(661, 386);
             this.Controls.Add(this.btCancel);
-            this.Controls.Add(this.chbAllowAddNext);
             this.Controls.Add(this.btSave);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.gbPassword);
@@ -335,7 +324,6 @@ namespace Work.Forms
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -357,7 +345,6 @@ namespace Work.Forms
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button btSave;
-        private System.Windows.Forms.CheckBox chbAllowAddNext;
         private System.Windows.Forms.Button btCancel;
         private System.Windows.Forms.ComboBox userGroupIdCombobox;
     }

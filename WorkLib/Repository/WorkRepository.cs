@@ -176,8 +176,6 @@ namespace WorkLib.Repository
                     cmd.Parameters.Add(
                         context.CreateParameter("UserName", user.UserName));
                     cmd.Parameters.Add(
-                        context.CreateParameter("Password", user.Password));
-                    cmd.Parameters.Add(
                         context.CreateParameter("FirstName", user.FirstName));
                     cmd.Parameters.Add(
                         context.CreateParameter("LastName", user.LastName));
@@ -190,16 +188,15 @@ namespace WorkLib.Repository
                     if (user.UserId == 0) // insert
                         cmd.CommandText = @"
 INSERT INTO [Users]
-	([UserName],[Password],[FirstName],[LastName],[Email],[Phone],[UserGroupId])
+	([UserName],[FirstName],[LastName],[Email],[Phone],[UserGroupId])
      VALUES
-	(@UserName,@Password,@FirstName,@LastName,@Email,@Phone,@UserGroupId);
+	(@UserName,@FirstName,@LastName,@Email,@Phone,@UserGroupId);
 SELECT CAST(@@IDENTITY AS int);";
                     else                  // edit
                     {
                         cmd.CommandText = @"
 UPDATE [Users]
    SET [UserName] = @UserName,
-       [Password] = @Password,
        [FirstName] = @FirstName,
        [LastName] = @LastName,
        [Email] = @Email,
@@ -493,7 +490,7 @@ SELECT @UserId";
         /// <param name="context">The context.</param>
         /// <returns></returns>
         /// <exception cref="DbContext"></exception>
-        public static ICollection<User> GetProjectUsers(int projectId, DbContext context = null)
+        public static User[] GetProjectUsers(int projectId, DbContext context = null)
         {
             if (context == null)
                 using (var c = new DbContext())
@@ -513,13 +510,107 @@ SELECT @UserId";
                             list.Add(new User(reader));
                     }
                 }
-                return list;
+                return list.ToArray();
             }
             catch (Exception ex)
             {
                 throw new AppException("Error loading project users.", ex);
             }
         }
+
+        /// <summary>
+        /// Saves the project.
+        /// </summary>
+        /// <param name="project">The project.</param>
+        /// <param name="context">The data context.</param>
+        /// <returns>Project</returns>
+        /// <exception cref="WorkLib.Model.AppException">
+        /// Error saving project.
+        /// </exception>
+        public static Project SaveProject(Project project, DbContext context)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                    return SaveProject(project, c);
+            try
+            {
+                using (var cmd = context.CreateCommand())
+                {
+                    cmd.Parameters.Add(
+                        context.CreateParameter("ProjectName", project.ProjectName));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("ProjectDescription", project.ProjectDescription));
+                    if (project.ProjectId == 0) // insert
+                        cmd.CommandText = @"
+INSERT INTO [Projects]
+	([ProjectName],[ProjectDescription])
+     VALUES
+	(@ProjectName,@ProjectDescription);
+SELECT CAST(@@IDENTITY AS int);";
+                    else                  // edit
+                    {
+                        cmd.CommandText = @"
+UPDATE [Projects]
+   SET [ProjectName] = @ProjectName,
+       [ProjectDescription] = @ProjectDescription
+ WHERE ProjectId=@ProjectId;
+SELECT @ProjectId";
+                        cmd.Parameters.Add(
+                            context.CreateParameter("ProjectId", project.ProjectId, DbType.Int32));
+                    }
+                    var projectId = (int)cmd.ExecuteScalar(); // get user id
+                    if (projectId > 0) // OK
+                    {
+                        project.ProjectId = projectId; // get id after insert
+                        // user projects
+                    }
+                    return project;
+                }
+            }
+            catch (AppException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new AppException($"Error saving project {project.ProjectName}.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the project.
+        /// </summary>
+        /// <param name="project">The project.</param>
+        /// <param name="context">The data context.</param>
+        /// <exception cref="WorkLib.Model.AppException">
+        /// Operation failed. No project deleted.
+        /// </exception>
+        public static void DeleteProject(Project project, DbContext context)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                {
+                    DeleteProject(project, c);
+                    return;
+                }
+            try
+            {
+                using (var cmd = context.CreateCommand(
+                    "delete from UserProjects where ProjectId=@ProjectId;delete from Projects where ProjectId=@ProjectId;"))
+                {
+                    cmd.Parameters.Add(
+                        context.CreateParameter("ProjectId", project.ProjectId, DbType.Int32));
+                    var ret = cmd.ExecuteNonQuery();
+                    if (ret == 0)
+                        throw new AppException("Operation failed. No project deleted.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new AppException($"Error deleting project {project.ProjectName}.", ex);
+            }
+        }
+
         #endregion
 
         #region Work

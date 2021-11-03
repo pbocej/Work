@@ -58,16 +58,7 @@ namespace Work.Forms
         {
             try
             {
-                var vc = new ValidationContext(_user, null, null);
-                IList<ValidationResult> errors = new List<ValidationResult>();
-                if (!Validator.TryValidateObject(_user, vc, errors, false))
-                {
-                    var sb = new StringBuilder();
-                    foreach (var error in errors)
-                        sb.AppendLine(error.ErrorMessage);
-                    MessageBox.Show(this, sb.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
+                if (Validate())
                 {
                     _user.UserGroupId = (int)userGroupIdCombobox.SelectedValue;
                     var up = new List<UserProject>();
@@ -95,7 +86,27 @@ namespace Work.Forms
                 MessageBox.Show(this, ex.FullMessage, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
+        
+        new private bool Validate()
+        {
+            var vc = new ValidationContext(_user, null, null);
+            IList<ValidationResult> errors = new List<ValidationResult>();
+            if (!Validator.TryValidateObject(_user, vc, errors, false))
+            {
+                var sb = new StringBuilder();
+                foreach (var error in errors)
+                    sb.AppendLine(error.ErrorMessage);
+                MessageBox.Show(this, sb.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            // password
+            if (_passwordChanged && passwordTextBox.Text != password2TextBox.Text)
+            {
+                MessageBox.Show(this, "Passwords does not match.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
         private void btCancel_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
@@ -105,6 +116,11 @@ namespace Work.Forms
         private void passwordTextBox_TextChanged(object sender, EventArgs e)
         {
             _passwordChanged = true;
+        }
+
+        public User User
+        {
+            get { return _user; }
         }
     }
 }

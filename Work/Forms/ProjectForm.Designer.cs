@@ -32,19 +32,15 @@ namespace Work.Forms
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label projectNameLabel;
             System.Windows.Forms.Label projectDescriptionLabel;
-            this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.projectNameTextBox = new System.Windows.Forms.TextBox();
             this.projectDescriptionTextBox = new System.Windows.Forms.TextBox();
             this.btSave = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
+            this.projectBindingSource = new System.Windows.Forms.BindingSource(this.components);
             projectNameLabel = new System.Windows.Forms.Label();
             projectDescriptionLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).BeginInit();
             this.SuspendLayout();
-            // 
-            // projectBindingSource
-            // 
-            this.projectBindingSource.DataSource = typeof(WorkLib.Model.Project);
             // 
             // projectNameLabel
             // 
@@ -55,14 +51,6 @@ namespace Work.Forms
             projectNameLabel.TabIndex = 1;
             projectNameLabel.Text = "Project Name:";
             // 
-            // projectNameTextBox
-            // 
-            this.projectNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.projectBindingSource, "ProjectName", true));
-            this.projectNameTextBox.Location = new System.Drawing.Point(127, 41);
-            this.projectNameTextBox.Name = "projectNameTextBox";
-            this.projectNameTextBox.Size = new System.Drawing.Size(340, 20);
-            this.projectNameTextBox.TabIndex = 2;
-            // 
             // projectDescriptionLabel
             // 
             projectDescriptionLabel.AutoSize = true;
@@ -71,6 +59,14 @@ namespace Work.Forms
             projectDescriptionLabel.Size = new System.Drawing.Size(99, 13);
             projectDescriptionLabel.TabIndex = 3;
             projectDescriptionLabel.Text = "Project Description:";
+            // 
+            // projectNameTextBox
+            // 
+            this.projectNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.projectBindingSource, "ProjectName", true));
+            this.projectNameTextBox.Location = new System.Drawing.Point(127, 41);
+            this.projectNameTextBox.Name = "projectNameTextBox";
+            this.projectNameTextBox.Size = new System.Drawing.Size(340, 20);
+            this.projectNameTextBox.TabIndex = 2;
             // 
             // projectDescriptionTextBox
             // 
@@ -89,6 +85,7 @@ namespace Work.Forms
             this.btSave.TabIndex = 5;
             this.btSave.Text = "Save";
             this.btSave.UseVisualStyleBackColor = true;
+            this.btSave.Click += new System.EventHandler(this.btSave_Click);
             // 
             // btCancel
             // 
@@ -99,6 +96,11 @@ namespace Work.Forms
             this.btCancel.TabIndex = 6;
             this.btCancel.Text = "Cancel";
             this.btCancel.UseVisualStyleBackColor = true;
+            this.btCancel.Click += new System.EventHandler(this.btCancel_Click);
+            // 
+            // projectBindingSource
+            // 
+            this.projectBindingSource.DataSource = typeof(WorkLib.Model.Project);
             // 
             // ProjectForm
             // 
@@ -117,6 +119,7 @@ namespace Work.Forms
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "ProjectForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Project";
             this.Load += new System.EventHandler(this.ProjectForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.projectBindingSource)).EndInit();

@@ -137,7 +137,7 @@ namespace Work.Forms
                                     if (frm.ShowDialog(this) == DialogResult.OK)
                                     {
                                         RefreshData();
-                                        SelectRow(user);
+                                        SelectRow(frm.User);
                                     }
                                 }
                                 break;
@@ -147,7 +147,7 @@ namespace Work.Forms
                                     if (frm.ShowDialog(this) == DialogResult.OK)
                                     {
                                         RefreshData();
-                                        SelectRow(user);
+                                        SelectRow(frm.User);
                                     }
                                 }
                                 break;
@@ -163,13 +163,35 @@ namespace Work.Forms
                         }
                         break;
                     case 2:     // project
+                        var project = (Project)dgProjects.SelectedRows[0].DataBoundItem;
                         switch (action)
                         {
                             case GridAction.Edit:    // edit
+                                using (var frm = new ProjectForm(project))
+                                {
+                                    if (frm.ShowDialog(this) == DialogResult.OK)
+                                    {
+                                        RefreshData();
+                                        SelectRow(frm.Project);
+                                    }
+                                }
                                 break;
                             case GridAction.Add:   // add
+                                using (var frm = new ProjectForm(new Project()))
+                                {
+                                    if (frm.ShowDialog(this) == DialogResult.OK)
+                                    {
+                                        RefreshData();
+                                        SelectRow(frm.Project);
+                                    }
+                                }
                                 break;
                             case GridAction.Delete:   // delete
+                                if (project != null && MessageBox.Show(this, $"Delete project {project.ProjectName}?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                                {
+                                    project.Delete();
+                                    RefreshData();
+                                }
                                 break;
                             default:
                                 break;
@@ -194,18 +216,28 @@ namespace Work.Forms
             switch (entity.GetType().Name)
             {
                 case "WorkHour":
+                    foreach (DataGridViewRow row in dgWork.Rows)
+                        if (((WorkHour)row.DataBoundItem).WorkHourID == ((WorkHour)entity).WorkHourID)
+                        {
+                            row.Selected = true;
+                            break;
+                        }
                     break;
                 case "User":
                     foreach (DataGridViewRow row in dgUsers.Rows)
-                    {
                         if (((User)row.DataBoundItem).UserId == ((User)entity).UserId)
                         {
                             row.Selected = true;
                             break;
                         }
-                    }
                     break;
                 case "Project":
+                    foreach (DataGridViewRow row in dgProjects.Rows)
+                        if (((Project)row.DataBoundItem).ProjectId == ((Project)entity).ProjectId)
+                        {
+                            row.Selected = true;
+                            break;
+                        }
                     break;
                 default:
                     break;
