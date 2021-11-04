@@ -34,5 +34,17 @@ namespace Work.Properties {
                 this["LastUserName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int ProjectId {
+            get {
+                return ((int)(this["ProjectId"]));
+            }
+            set {
+                this["ProjectId"] = value;
+            }
+        }
     }
 }

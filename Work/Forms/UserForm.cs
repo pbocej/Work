@@ -58,7 +58,7 @@ namespace Work.Forms
         {
             try
             {
-                if (Validate())
+                if (ValidateData())
                 {
                     _user.UserGroupId = (int)userGroupIdCombobox.SelectedValue;
                     var up = new List<UserProject>();
@@ -87,7 +87,7 @@ namespace Work.Forms
             }
         }
         
-        new private bool Validate()
+        private bool ValidateData()
         {
             var vc = new ValidationContext(_user, null, null);
             IList<ValidationResult> errors = new List<ValidationResult>();

@@ -351,7 +351,9 @@ SELECT @UserId";
                         WorkRepository.GetAllProjects(context)
                             .ToList()
                             .ForEach(p => projects.Add(new UserProject(p)));
-                        cmd.CommandText = "select * from UserProjects where UserId=@userId";
+                        cmd.CommandText = @"select p.ProjectId, p.ProjectName from UserProjects up
+inner join Projects p on up.ProjectId = p.ProjectId
+where up.UserId = @userId";
                         cmd.Parameters.Add(
                             context.CreateParameter("userId", userId, DbType.Int32));
                         using (var r = cmd.ExecuteReader())
@@ -368,7 +370,9 @@ SELECT @UserId";
                     }
                     else
                     {
-                        cmd.CommandText = "select * from UserProjects where UserId=@userId";
+                        cmd.CommandText = @"select p.ProjectId, p.ProjectName from UserProjects up
+inner join Projects p on up.ProjectId = p.ProjectId
+where UserId=@userId";
                         cmd.Parameters.Add(
                             context.CreateParameter("userId", userId, DbType.Int32));
                         using (var r = cmd.ExecuteReader())
@@ -630,7 +634,7 @@ SELECT @ProjectId";
             try
             {
                 using (var cmd = context.CreateCommand(
-                    "select * from WorkHours where UserId=@userId",
+                    @"select * from v_UserWorkList where UserId=@userId order by [From] asc",
                     CommandType.Text))
                 {
                     cmd.Parameters.Add(
@@ -640,13 +644,117 @@ SELECT @ProjectId";
                         var works = new List<WorkHour>();
                         while (reader.Read())
                             works.Add(new WorkHour(reader));
-                        return works.OrderBy(w => w.Date).ThenBy(u => u.From).ToArray();
+                        return works.ToArray();
                     }
                 }
             }
             catch (Exception ex)
             {
                 throw new AppException("Error Error loading work.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Saves the work hour.
+        /// </summary>
+        /// <param name="workHour">The work hour.</param>
+        /// <param name="context">The data context.</param>
+        /// <returns></returns>
+        /// <exception cref="WorkLib.Model.AppException">
+        /// Data cannot be saved.
+        /// or
+        /// Error saving work.
+        /// </exception>
+        internal static int SaveWorkHour(WorkHour workHour, DbContext context)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                    return SaveWorkHour(workHour, c);
+            try
+            {
+                using (var cmd = context.CreateCommand())
+                {
+                    cmd.Parameters.Add(
+                        context.CreateParameter("Date", workHour.Date, DbType.DateTime));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("From", workHour.From, DbType.DateTime));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("To", workHour.To, DbType.DateTime));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("Hours", workHour.Hours, DbType.DateTime));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("ProjectId", workHour.ProjectId, DbType.Int32));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("Subject", workHour.Subject));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("Description", workHour.Description));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("UserId", workHour.UserId, DbType.Int32));
+                    if (workHour.WorkHourID == 0) // insert
+                    {
+                        cmd.CommandText =
+@"INSERT INTO WorkHours
+([Date],[From],[To],[Hours],[ProjectId],[Subject],[Description],[UserId])
+VALUES (@Date,@From,@To,@Hours,@ProjectId,@Subject,@Description,@UserId);
+SELECT CAST(@@IDENTITY as int)";
+                    }
+                    else // update
+                    {
+                        cmd.CommandText =
+@"UPDATE [dbo].[WorkHours]
+   SET [Date] = @Date
+      ,[From] = @From
+      ,[To] = @To
+      ,[Hours] = @Hours
+      ,[ProjectId] = @ProjectId
+      ,[Subject] = @Subject
+      ,[Description] = @Description
+      ,[UserId] = @UserId
+ WHERE WorkHourID=@workHourId;
+SELECT @workHourId";
+                        cmd.Parameters.Add(
+                            context.CreateParameter("workHourId", workHour.WorkHourID, DbType.Int32));
+                    }
+                    workHour.WorkHourID = (int)cmd.ExecuteScalar();
+                    if (workHour.WorkHourID == 0)
+                        throw new AppException("Data cannot be saved.");
+                    return workHour.WorkHourID;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("Error saving work.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Deletes the work hour.
+        /// </summary>
+        /// <param name="workHour">The work hour.</param>
+        /// <param name="context">The data context.</param>
+        public static void DeleteWorkHour(WorkHour workHour, DbContext context)
+        {
+            if (context == null)
+                using (var c = new DbContext())
+                {
+                    DeleteWorkHour(workHour, c);
+                    return;
+                }
+            try
+            {
+                using (var cmd = context.CreateCommand(
+                    "delete from WorkHours where WorkHourId=@workHourId;"))
+                {
+                    cmd.Parameters.Add(
+                        context.CreateParameter("workHourId", workHour.WorkHourID, DbType.Int32));
+                    var ret = cmd.ExecuteNonQuery();
+                    if (ret == 0)
+                        throw new AppException("Operation failed. No record deleted.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new AppException($"Error deleting record.", ex);
             }
         }
 

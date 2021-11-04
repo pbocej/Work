@@ -79,7 +79,10 @@ namespace Work.Forms
             if (dg.Rows.Count > 0)
             {
                 dg.Rows[0].Selected = true;
-                dg.Rows[0].Cells[0].Selected = true;
+                if (dg.Rows[0].Cells[1].Visible)
+                    dg.Rows[0].Cells[1].Selected = true;
+                else
+                    dg.Rows[0].Cells[2].Selected = true;
             }
             dg.Select();
         }
@@ -112,23 +115,47 @@ namespace Work.Forms
         {
             try
             {
+                User user;
                 switch (tabMainControl.SelectedIndex)
                 {
                     case 0:     // work hour
+                        user = cbUser.SelectedItem as User;
+                        var workHour = (WorkHour)dgWork.SelectedRows[0].DataBoundItem;
                         switch (action)
                         {
                             case GridAction.Edit:    // edit
+                                using (var frm = new WorkHourForm(user, workHour))
+                                    if (frm.ShowDialog(this) == DialogResult.OK)
+                                    {
+                                        RefreshData();
+                                        SelectRow(frm.WorkHour);
+                                    }
                                 break;
                             case GridAction.Add:   // add
+                                using (var frm = new WorkHourForm(user, 
+                                    new WorkHour() 
+                                    { 
+                                        UserId = user.UserId 
+                                    }))
+                                    if (frm.ShowDialog(this) == DialogResult.OK)
+                                    {
+                                        RefreshData();
+                                        SelectRow(frm.WorkHour);
+                                    }
                                 break;
                             case GridAction.Delete:   // delete
+                                if (workHour != null && MessageBox.Show(this, $"Delete this record?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                                {
+                                    workHour.Delete();
+                                    RefreshData();
+                                }
                                 break;
                             default:
                                 break;
                         }
                         break;
                     case 1:     // user
-                        var user = (User)dgUsers.SelectedRows[0].DataBoundItem;
+                        user = (User)dgUsers.SelectedRows[0].DataBoundItem;
                         switch (action)
                         {
                             case GridAction.Edit:    // edit
@@ -161,6 +188,7 @@ namespace Work.Forms
                             default:
                                 break;
                         }
+                        RefreshUsers();
                         break;
                     case 2:     // project
                         var project = (Project)dgProjects.SelectedRows[0].DataBoundItem;
