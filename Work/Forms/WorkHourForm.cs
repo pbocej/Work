@@ -84,6 +84,7 @@ namespace Work.Forms
             {
                 MessageBox.Show(this, "Begin date is greather then the end date.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 fromDateTimePicker.Focus();
+                return false;
             }
             return true;
         }
