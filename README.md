@@ -13,6 +13,6 @@ After starting program, You must login with blank passwords as:
 * Peter - me
 * Ivana - test user
  
-In administrator mode You can users, projects and work hours for any user.
+In administrator mode You can manage users, projects and work hours for any user.
 
 In user modo You can only manage Your work hours.
