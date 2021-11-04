@@ -634,7 +634,7 @@ SELECT @ProjectId";
             try
             {
                 using (var cmd = context.CreateCommand(
-                    @"select * from v_UserWorkList where UserId=@userId order by [From] asc",
+                    @"select * from v_UserWorkList where UserId=@userId",
                     CommandType.Text))
                 {
                     cmd.Parameters.Add(
