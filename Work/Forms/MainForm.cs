@@ -120,10 +120,14 @@ namespace Work.Forms
                 {
                     case 0:     // work hour
                         user = cbUser.SelectedItem as User;
-                        var workHour = (WorkHour)dgWork.SelectedRows[0].DataBoundItem;
+                        WorkHour workHour = null;
+                        if (dgWork.SelectedRows.Count > 0)
+                            workHour = (WorkHour)dgWork.SelectedRows[0].DataBoundItem;
                         switch (action)
                         {
                             case GridAction.Edit:    // edit
+                                if (workHour == null)
+                                    return;
                                 using (var frm = new WorkHourForm(user, workHour))
                                     if (frm.ShowDialog(this) == DialogResult.OK)
                                     {
@@ -144,7 +148,9 @@ namespace Work.Forms
                                     }
                                 break;
                             case GridAction.Delete:   // delete
-                                if (workHour != null && MessageBox.Show(this, $"Delete this record?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                                if (workHour == null)
+                                    return;
+                                if (MessageBox.Show(this, $"Delete this record?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
                                 {
                                     workHour.Delete();
                                     RefreshData();
@@ -155,10 +161,14 @@ namespace Work.Forms
                         }
                         break;
                     case 1:     // user
-                        user = (User)dgUsers.SelectedRows[0].DataBoundItem;
+                        user = null;
+                        if (dgUsers.SelectedRows.Count > 0)
+                            user = (User)dgUsers.SelectedRows[0].DataBoundItem;
                         switch (action)
                         {
                             case GridAction.Edit:    // edit
+                                if (user == null)
+                                    return;
                                 using (var frm = new UserForm(user))
                                 {
                                     if (frm.ShowDialog(this) == DialogResult.OK)
@@ -179,7 +189,9 @@ namespace Work.Forms
                                 }
                                 break;
                             case GridAction.Delete:   // delete
-                                if (user != null && MessageBox.Show(this, $"Delete user {user.FullName}?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                                if (user == null)
+                                    return;
+                                if (MessageBox.Show(this, $"Delete user {user.FullName}?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
                                 {
                                     user.Delete();
                                     RefreshData();
@@ -191,10 +203,14 @@ namespace Work.Forms
                         RefreshUsers();
                         break;
                     case 2:     // project
-                        var project = (Project)dgProjects.SelectedRows[0].DataBoundItem;
+                        Project project = null;
+                        if (dgProjects.SelectedRows.Count > 0)
+                            project = (Project)dgProjects.SelectedRows[0].DataBoundItem;
                         switch (action)
                         {
                             case GridAction.Edit:    // edit
+                                if (project == null)
+                                    return;
                                 using (var frm = new ProjectForm(project))
                                 {
                                     if (frm.ShowDialog(this) == DialogResult.OK)
@@ -215,7 +231,9 @@ namespace Work.Forms
                                 }
                                 break;
                             case GridAction.Delete:   // delete
-                                if (project != null && MessageBox.Show(this, $"Delete project {project.ProjectName}?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                                if (project == null)
+                                    return;
+                                if (MessageBox.Show(this, $"Delete project {project.ProjectName}?", "Warning", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
                                 {
                                     project.Delete();
                                     RefreshData();

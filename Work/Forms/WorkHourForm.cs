@@ -49,7 +49,7 @@ namespace Work.Forms
 
         private void btSave_Click(object sender, EventArgs e)
         {
-            _workHour.ProjectId = (int)projectNameComboBox.SelectedValue;
+            _workHour.ProjectId = (int?)projectNameComboBox.SelectedValue;
             if (ValidateData())
             {
                 try
