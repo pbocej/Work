@@ -3,6 +3,8 @@ using System.Windows.Forms;
 using WorkLib.Model;
 using WorkLib.Repository;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Work.Forms
 {
@@ -63,6 +65,7 @@ namespace Work.Forms
                 cbUser.Visible = lbUser.Visible =
                     (Global.CurrenntUser.GroupType == GroupType.Administrators
                     && tabMainControl.SelectedIndex == 0);
+                SumTotal();
             }
             catch (AppException ex)
             {
@@ -85,6 +88,17 @@ namespace Work.Forms
                     dg.Rows[0].Cells[2].Selected = true;
             }
             dg.Select();
+        }
+
+        private void SumTotal()
+        {
+            var sumMinutes = ((IList<WorkHour>)bsWork.List)
+                                .Where(h => h.Hours.HasValue)
+                                .Sum(h => h.Hours.Value.Hour * 60 + h.Hours.Value.Minute);
+            var ts = TimeSpan.FromMinutes(sumMinutes);
+            var hours = Math.Floor(ts.TotalHours);
+            var minutes = ts.TotalMinutes - hours * 60;
+            tslTotal.Text = $"{hours}:{minutes:00}";
         }
 
         private void GridKeyUpp(object source, KeyEventArgs e)
