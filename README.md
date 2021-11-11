@@ -1,5 +1,5 @@
 # Work hours
-Work hours evidence
+Work hours basic evidence
 ## Requirements
 * Visual Studio 2017 +
 * MS SQL Server 2008 +
