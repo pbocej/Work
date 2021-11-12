@@ -139,21 +139,34 @@ namespace WorkLib.Repository
                     DeleteUser(user, c);
                     return;
                 }
-            try
+            using (var tran = context.CreateTransaction())
             {
-                using (var cmd = context.CreateCommand(
-                    "delete from UserProjects where UserId=@userId;delete from Users where UserId=@userId;"))
+                try
                 {
-                    cmd.Parameters.Add(
-                        context.CreateParameter("userId", user.UserId, DbType.Int32));
-                    var ret = cmd.ExecuteNonQuery();
-                    if (ret == 0)
-                        throw new AppException("Operation failed. No user deleted.");
+                    using (var cmd = context.CreateCommand())
+                    {
+                        cmd.Transaction = tran;
+                        cmd.Parameters.Add(
+                            context.CreateParameter("userId", user.UserId, DbType.Int32));
+                        // delete work hours
+                        cmd.CommandText = "delete from WorkHours where UserId=@userId;";
+                        var ret = cmd.ExecuteNonQuery();
+                        // delete user projects
+                        cmd.CommandText = "delete from UserProjects where UserId=@userId;";
+                        ret = cmd.ExecuteNonQuery();
+                        // delete user
+                        cmd.CommandText = "delete from Users where UserId=@userId;";
+                        ret = cmd.ExecuteNonQuery();
+                        if (ret == 0)
+                            throw new AppException("Operation failed. No user deleted.");
+                        tran.Commit();
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                throw new AppException($"Error deleting user {user.FullName}.", ex);
+                catch (Exception ex)
+                {
+                    tran.Rollback();
+                    throw new AppException($"Error deleting user {user.FullName}.", ex);
+                }
             }
         }
         /// <summary>

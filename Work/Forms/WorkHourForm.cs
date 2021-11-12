@@ -54,7 +54,7 @@ namespace Work.Forms
             {
                 try
                 {
-                    if (_workHour.Save() > 0);
+                    if (_workHour.Save() > 0)
                     {
                         DialogResult = DialogResult.OK;
                         Properties.Settings.Default.ProjectId = _workHour.ProjectId ?? 0;

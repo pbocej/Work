@@ -132,6 +132,28 @@ namespace WorkLib.Data
 
         #endregion
 
+        #region Transaction
+
+        /// <summary>
+        /// Creates the transaction.
+        /// </summary>
+        /// <param name="isolationLevel">The isolation level.</param>
+        /// <returns>IDbTransaction</returns>
+        /// <exception cref="WorkLib.Model.AppException">Error creating database transaction.</exception>
+        public IDbTransaction CreateTransaction(IsolationLevel isolationLevel = IsolationLevel.ReadCommitted)
+        {
+            try
+            {
+                return _dbConnection.BeginTransaction(isolationLevel);
+            }
+            catch (Exception ex)
+            {
+                throw new AppException("Error creating database transaction.", ex);
+            }
+        }
+
+        #endregion
+
         #region DataSet & DataTable
 
         /// <summary>
