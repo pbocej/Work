@@ -198,12 +198,14 @@ namespace WorkLib.Repository
                         context.CreateParameter("Phone", user.Phone));
                     cmd.Parameters.Add(
                         context.CreateParameter("UserGroupId", user.UserGroupId, DbType.Int32));
+                    cmd.Parameters.Add(
+                        context.CreateParameter("Image", user.Image, DbType.Binary));
                     if (user.UserId == 0) // insert
                         cmd.CommandText = @"
 INSERT INTO [Users]
-	([UserName],[FirstName],[LastName],[Email],[Phone],[UserGroupId])
+	([UserName],[FirstName],[LastName],[Email],[Phone],[UserGroupId],[Image])
      VALUES
-	(@UserName,@FirstName,@LastName,@Email,@Phone,@UserGroupId);
+	(@UserName,@FirstName,@LastName,@Email,@Phone,@UserGroupId,@Image);
 SELECT CAST(@@IDENTITY AS int);";
                     else                  // edit
                     {
@@ -214,7 +216,8 @@ UPDATE [Users]
        [LastName] = @LastName,
        [Email] = @Email,
        [Phone] = @Phone,
-       [UserGroupId] = @UserGroupId
+       [UserGroupId] = @UserGroupId,
+       [Image] = @Image
  WHERE UserId=@UserId;
 SELECT @UserId";
                         cmd.Parameters.Add(

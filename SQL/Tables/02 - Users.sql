@@ -10,6 +10,7 @@ CREATE TABLE [dbo].[Users](
 	[Email] [varchar](50) NULL,
 	[Phone] [varchar](50) NULL,
 	[UserGroupId] [int] NOT NULL,
+	[Image] [image] NULL
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[UserId] ASC

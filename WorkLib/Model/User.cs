@@ -89,6 +89,14 @@ namespace WorkLib.Model
             ? GroupType.Administrators 
             : GroupType.Users;
 
+        /// <summary>
+        /// Gets or sets the image.
+        /// </summary>
+        /// <value>
+        /// The image.
+        /// </value>
+        public byte[] Image { get; set; }
+
         private UserProject[] _userProjects;
         /// <summary>
         /// Gets or sets the user projects.

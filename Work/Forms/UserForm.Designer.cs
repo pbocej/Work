@@ -38,6 +38,7 @@ namespace Work.Forms
             System.Windows.Forms.Label userGroupIdLabel;
             this.bsUser = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.phoneTextBox = new System.Windows.Forms.TextBox();
             this.emailTextBox = new System.Windows.Forms.TextBox();
             this.lastNameTextBox = new System.Windows.Forms.TextBox();
@@ -54,6 +55,7 @@ namespace Work.Forms
             this.userGroupIdCombobox = new System.Windows.Forms.ComboBox();
             this.btSave = new System.Windows.Forms.Button();
             this.btCancel = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             userNameLabel = new System.Windows.Forms.Label();
             firstNameLabel = new System.Windows.Forms.Label();
             lastNameLabel = new System.Windows.Forms.Label();
@@ -62,6 +64,7 @@ namespace Work.Forms
             userGroupIdLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bsUser)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.gbPassword.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -127,6 +130,8 @@ namespace Work.Forms
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(phoneLabel);
             this.groupBox1.Controls.Add(this.phoneTextBox);
             this.groupBox1.Controls.Add(emailLabel);
@@ -143,6 +148,18 @@ namespace Work.Forms
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Basic information";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.pictureBox1.DataBindings.Add(new System.Windows.Forms.Binding("Image", this.bsUser, "Image", true));
+            this.pictureBox1.Location = new System.Drawing.Point(193, 21);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(99, 87);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 9;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.Image_Click);
             // 
             // phoneTextBox
             // 
@@ -165,7 +182,7 @@ namespace Work.Forms
             this.lastNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "LastName", true));
             this.lastNameTextBox.Location = new System.Drawing.Point(87, 73);
             this.lastNameTextBox.Name = "lastNameTextBox";
-            this.lastNameTextBox.Size = new System.Drawing.Size(205, 20);
+            this.lastNameTextBox.Size = new System.Drawing.Size(99, 20);
             this.lastNameTextBox.TabIndex = 3;
             // 
             // firstNameTextBox
@@ -173,7 +190,7 @@ namespace Work.Forms
             this.firstNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "FirstName", true));
             this.firstNameTextBox.Location = new System.Drawing.Point(87, 47);
             this.firstNameTextBox.Name = "firstNameTextBox";
-            this.firstNameTextBox.Size = new System.Drawing.Size(205, 20);
+            this.firstNameTextBox.Size = new System.Drawing.Size(99, 20);
             this.firstNameTextBox.TabIndex = 2;
             // 
             // userNameTextBox
@@ -181,7 +198,7 @@ namespace Work.Forms
             this.userNameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bsUser, "UserName", true));
             this.userNameTextBox.Location = new System.Drawing.Point(87, 21);
             this.userNameTextBox.Name = "userNameTextBox";
-            this.userNameTextBox.Size = new System.Drawing.Size(205, 20);
+            this.userNameTextBox.Size = new System.Drawing.Size(99, 20);
             this.userNameTextBox.TabIndex = 1;
             // 
             // groupBox2
@@ -296,6 +313,16 @@ namespace Work.Forms
             this.btCancel.UseVisualStyleBackColor = true;
             this.btCancel.Click += new System.EventHandler(this.btCancel_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(226, 94);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 13);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Click to load";
+            this.label1.Click += new System.EventHandler(this.Image_Click);
+            // 
             // UserForm
             // 
             this.AcceptButton = this.btSave;
@@ -318,6 +345,7 @@ namespace Work.Forms
             ((System.ComponentModel.ISupportInitialize)(this.bsUser)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.gbPassword.ResumeLayout(false);
             this.gbPassword.PerformLayout();
@@ -347,5 +375,7 @@ namespace Work.Forms
         private System.Windows.Forms.Button btSave;
         private System.Windows.Forms.Button btCancel;
         private System.Windows.Forms.ComboBox userGroupIdCombobox;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Label label1;
     }
 }

@@ -58,6 +58,12 @@ namespace Work.Forms
         {
             try
             {
+                if (pictureBox1.Image != null)
+                {
+                    Image image = pictureBox1.Image;
+                    var converter = new ImageConverter();
+                    _user.Image = (byte[])converter.ConvertTo(image, typeof(byte[]));
+                }
                 if (ValidateData())
                 {
                     _user.UserGroupId = (int)userGroupIdCombobox.SelectedValue;
@@ -121,6 +127,16 @@ namespace Work.Forms
         public User User
         {
             get { return _user; }
+        }
+
+        private void Image_Click(object sender, EventArgs e)
+        {
+            using (var frm = new OpenFileDialog())
+            {
+                frm.Filter = "Pictures|*.png;*.jpg|All|*.*";
+                if (frm.ShowDialog(this) == DialogResult.OK)
+                    pictureBox1.Load(frm.FileName);
+            }
         }
     }
 }
