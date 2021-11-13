@@ -5,6 +5,8 @@ using WorkLib.Repository;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using System.Linq;
+using System.Drawing;
+using System.IO;
 
 namespace Work.Forms
 {
@@ -18,6 +20,12 @@ namespace Work.Forms
         private void MainForm_Load(object sender, EventArgs e)
         {
             lbCurrentUser.Text = Global.CurrenntUser.FullName;
+            if (Global.CurrenntUser.Image != null)
+                using (var ms = new MemoryStream())
+                {
+                    ms.Write(Global.CurrenntUser.Image, 0, Global.CurrenntUser.Image.Length);
+                    lbCurrentUserImage.Image = System.Drawing.Image.FromStream(ms, true);
+                }
             RefreshUsers();
             RefreshData();
             dgWork.Focus();
@@ -150,10 +158,10 @@ namespace Work.Forms
                                     }
                                 break;
                             case GridAction.Add:   // add
-                                using (var frm = new WorkHourForm(user, 
-                                    new WorkHour() 
-                                    { 
-                                        UserId = user.UserId 
+                                using (var frm = new WorkHourForm(user,
+                                    new WorkHour()
+                                    {
+                                        UserId = user.UserId
                                     }))
                                     if (frm.ShowDialog(this) == DialogResult.OK)
                                     {
