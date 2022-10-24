@@ -78,8 +78,7 @@ namespace WorkLib.Data
         public void Close()
         {
             if (_dbConnection != null)
-                if (_dbConnection.State == ConnectionState.Open)
-                    _dbConnection.Close();
+                _dbConnection.Dispose();
             _dbConnection = null;
         }
 
