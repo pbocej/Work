@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Configuration;
 using System.Data;
 using System.Data.Common;
 using WorkLib.Model;
-using System.Configuration;
-using System.Reflection;
 
 namespace WorkLib.Data
 {

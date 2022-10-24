@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WorkLib.Data;
 using WorkLib.Model;
 using WorkLib.Repository;
-using System.ComponentModel.DataAnnotations;
 
 namespace Work.Forms
 {

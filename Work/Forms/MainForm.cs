@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using WorkLib.Model;
 using WorkLib.Repository;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Linq;
-using System.Drawing;
-using System.IO;
 
 namespace Work.Forms
 {
